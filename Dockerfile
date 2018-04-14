@@ -1,10 +1,11 @@
 FROM alpine:latest
-LABEL maintainer=stevesbrain
+LABEL maintainer=bclemens
 
 ENV BITLBEE_COMMIT 246b98b
 ENV DISCORD_COMMIT 4fc5649
 ENV FACEBOOK_COMMIT 553593d
 ENV HANGOUTS_COMMIT 0e137e6
+ENV LINE_COMMIT 156f411
 ENV MASTODON_COMMIT 0095ef0
 ENV SKYPE_COMMIT c395028
 ENV SLACK_COMMIT b0f1550
@@ -16,28 +17,33 @@ RUN set -x \
     && apk update \
     && apk upgrade \
     && apk add --virtual build-dependencies \
-	autoconf \
-	automake \
-	build-base \
-	curl \
-	git \
-	json-glib-dev \
-	libtool \
+    autoconf \
+    automake \
+    bison \
+    build-base \
+    curl \
+    flex \
+    git \
+    json-glib-dev \
+    boost-dev \
+    libtool \
     libotr-dev \
     mercurial \
+    openssl-dev \
     protobuf-c-dev \
     && apk add --virtual runtime-dependencies \
-	glib-dev \
-	gnutls-dev \
-	json-glib \
-	libgcrypt-dev \
+    glib-dev \
+    gnutls-dev \
+    json-glib \
+    libgcrypt-dev \
     libotr \
-	libpurple \
+    libpurple \
     libpurple-bonjour \
     libpurple-oscar \
     libpurple-xmpp \
-	libwebp-dev \
-	pidgin-dev \
+    libwebp-dev \
+    openssl \
+    pidgin-dev \
     protobuf-c \
     && cd /root \
     && git clone -n https://github.com/bitlbee/bitlbee \
@@ -73,6 +79,13 @@ RUN set -x \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libhangouts.so \
+    && cd /root \
+    && git clone -n https://gitlab.com/bclemens/purple-line \
+    && cd purple-line \
+    && git checkout ${LINE_COMMIT} \
+    && make THRIFT_STATIC=true \
+    && make install \
+    && strip /usr/lib/purple-2/libline.so \
     && cd /root \
     && git clone -n https://github.com/kensanata/bitlbee-mastodon \
     && cd bitlbee-mastodon \
