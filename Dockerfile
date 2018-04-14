@@ -21,6 +21,7 @@ RUN set -x \
 	git \
 	json-glib-dev \
 	libtool \
+    libotr-dev \
     mercurial \
     protobuf-c-dev \
     && apk add --virtual runtime-dependencies \
@@ -40,7 +41,7 @@ RUN set -x \
     && cd bitlbee \
     && git checkout ${BITLBEE_COMMIT} \
     && mkdir /bitlbee-data \
-    && ./configure --otr=1 --purple=1 --config=/bitlbee-data \
+    && ./configure --otr=plugin --purple=1 --config=/bitlbee-data \
     && make \
     && make install \
     && make install-dev \

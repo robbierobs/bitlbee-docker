@@ -5,6 +5,7 @@
 Minimal build of latest BitlBee on latest Alpine with latest plugins for:
 * [Discord](https://github.com/sm00th/bitlbee-discord)
 * [Facebook](https://github.com/jgeboski/bitlbee-facebook)
+* [Hangouts](https://bitbucket.org/EionRobb/purple-hangouts)
 * [Skype](https://github.com/EionRobb/skype4pidgin)
 * [Slack](https://github.com/dylex/slack-libpurple)
 * [Steam](https://github.com/bitlbee/bitlbee-steam)
