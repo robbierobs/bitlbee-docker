@@ -25,6 +25,7 @@ RUN set -x \
 	gnutls-dev \
 	json-glib \
 	libgcrypt-dev \
+    libotr \
 	libpurple \
 	libwebp-dev \
 	pidgin-dev \
@@ -33,7 +34,7 @@ RUN set -x \
     && cd bitlbee \
     && git checkout ${BITLBEE_COMMIT} \
     && mkdir /bitlbee-data \
-    && ./configure --purple=1 --config=/bitlbee-data \
+    && ./configure --otr=1 --purple=1 --config=/bitlbee-data \
     && make \
     && make install \
     && make install-dev \
