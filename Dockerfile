@@ -53,6 +53,7 @@ RUN set -x \
     && ./configure \
     && make \
     && make install \
+    && strip /usr/local/lib/bitlbee/discord.so \
     && cd /root \
     && git clone -n https://github.com/jgeboski/bitlbee-facebook \
     && cd bitlbee-facebook \
@@ -60,12 +61,14 @@ RUN set -x \
     && ./autogen.sh \
     && make \
     && make install \
+    && strip /usr/local/lib/bitlbee/facebook.so \
     && cd /root \
     && hg clone https://bitbucket.org/EionRobb/purple-hangouts \
     && cd purple-hangouts \
-    && hg update ${HANGOUTS_COMMIT}
+    && hg update ${HANGOUTS_COMMIT} \
     && make \
     && make install \
+    && strip /usr/lib/purple-2/libhangouts.so \
     && cd /root \
     && git clone -n https://github.com/EionRobb/skype4pidgin \
     && cd skype4pidgin \
@@ -73,6 +76,7 @@ RUN set -x \
     && cd skypeweb \
     && make \
     && make install \
+    && strip /usr/lib/purple-2/libskypeweb.so \
     && cd /root \
     && git clone -n https://github.com/dylex/slack-libpurple \
     && cd slack-libpurple \
@@ -86,6 +90,7 @@ RUN set -x \
     && ./autogen.sh \
     && make \
     && make install \
+    && strip /usr/local/lib/bitlbee/steam.so \
     && cd /root \
     && git clone -n https://github.com/majn/telegram-purple \
     && cd telegram-purple \
@@ -94,6 +99,7 @@ RUN set -x \
     && ./configure \
     && make \
     && make install \
+    && strip /usr/lib/purple-2/telegram-purple.so \
     && apk del --purge build-dependencies \
     && rm -rf /root/* \
     && rm -rf /var/cache/apk/* \
