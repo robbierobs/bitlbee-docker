@@ -27,6 +27,9 @@ RUN set -x \
 	libgcrypt-dev \
     libotr \
 	libpurple \
+    libpurple-bonjour \
+    libpurple-oscar \
+    libpurple-xmpp \
 	libwebp-dev \
 	pidgin-dev \
     && cd /root \
