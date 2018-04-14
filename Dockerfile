@@ -105,6 +105,7 @@ RUN set -x \
     && strip /usr/lib/purple-2/telegram-purple.so \
     && cd /root \
     && git clone -n https://github.com/EionRobb/funyahoo-plusplus \
+    && git checkout ${YAHOO_COMMIT} \
     && cd funyahoo-plusplus \
     && make \
     && make install \
