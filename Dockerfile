@@ -9,6 +9,7 @@ ENV SKYPE_COMMIT c395028
 ENV SLACK_COMMIT b0f1550
 ENV STEAM_COMMIT a6444d2
 ENV TELEGRAM_COMMIT 94dd3be
+ENV YAHOO_COMMIT fbbd9c5
 
 RUN set -x \
     && apk update \
@@ -102,6 +103,12 @@ RUN set -x \
     && make \
     && make install \
     && strip /usr/lib/purple-2/telegram-purple.so \
+    && cd /root \
+    && git clone -n https://github.com/EionRobb/funyahoo-plusplus \
+    && cd funyahoo-plusplus \
+    && make \
+    && make install \
+    && strip /usr/lib/purple-2/libyahoo-plusplus.so \
     && apk del --purge build-dependencies \
     && rm -rf /root/* \
     && rm -rf /var/cache/apk/* \
