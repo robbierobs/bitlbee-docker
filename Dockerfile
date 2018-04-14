@@ -4,6 +4,7 @@ LABEL maintainer=stevesbrain
 ENV BITLBEE_COMMIT 246b98b
 ENV DISCORD_COMMIT 4fc5649
 ENV FACEBOOK_COMMIT 553593d
+ENV HANGOUTS_COMMIT 0e137e6
 ENV SKYPE_COMMIT c395028
 ENV SLACK_COMMIT b0f1550
 ENV STEAM_COMMIT a6444d2
@@ -20,6 +21,8 @@ RUN set -x \
 	git \
 	json-glib-dev \
 	libtool \
+    mercurial \
+    protobuf-c-dev \
     && apk add --virtual runtime-dependencies \
 	glib-dev \
 	gnutls-dev \
@@ -55,6 +58,12 @@ RUN set -x \
     && cd bitlbee-facebook \
     && git checkout ${FACEBOOK_COMMIT} \
     && ./autogen.sh \
+    && make \
+    && make install \
+    && cd /root \
+    && hg clone https://bitbucket.org/EionRobb/purple-hangouts \
+    && cd purple-hangouts \
+    && hg update ${HANGOUTS_COMMIT}
     && make \
     && make install \
     && cd /root \
