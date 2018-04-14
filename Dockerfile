@@ -36,6 +36,7 @@ RUN set -x \
     libpurple-xmpp \
 	libwebp-dev \
 	pidgin-dev \
+    protobuf-c \
     && cd /root \
     && git clone -n https://github.com/bitlbee/bitlbee \
     && cd bitlbee \
