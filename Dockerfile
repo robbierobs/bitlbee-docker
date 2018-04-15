@@ -1,5 +1,8 @@
 FROM alpine:latest
-LABEL maintainer=bclemens
+LABEL maintainer="Brian Clemens <brian@teknik.io>"
+Label description="Bitlbee, full loaded."
+
+ARG MAKEFLAGS=-j12
 
 ENV BITLBEE_COMMIT 246b98b
 ENV DISCORD_COMMIT 4fc5649
@@ -19,8 +22,7 @@ ENV WECHAT_COMMIT 17b15e5
 ENV WHATSAPP_COMMIT 81c7285
 ENV YAHOO_COMMIT fbbd9c5
 
-RUN set -x \
-    && apk update \
+RUN apk update \
     && apk upgrade \
     && apk add --virtual build-dependencies \
     autoconf \
@@ -57,8 +59,10 @@ RUN set -x \
     libwebp-dev \
     openssl \
     pidgin-dev \
-    protobuf-c \
-    && cd /root \
+    protobuf-c
+
+# bitlbee
+RUN cd /root \
     && git clone -n https://github.com/bitlbee/bitlbee \
     && cd bitlbee \
     && git checkout ${BITLBEE_COMMIT} \
@@ -68,7 +72,10 @@ RUN set -x \
     && make install \
     && make install-dev \
     && make install-etc \
-    && cd /root \
+    && rm -rf /root/*
+
+# discord
+RUN cd /root \
     && git clone -n https://github.com/sm00th/bitlbee-discord \
     && cd bitlbee-discord \
     && git checkout ${DISCORD_COMMIT} \
@@ -77,7 +84,10 @@ RUN set -x \
     && make \
     && make install \
     && strip /usr/local/lib/bitlbee/discord.so \
-    && cd /root \
+    && rm -rf /root/*
+
+# facebook
+RUN cd /root \
     && git clone -n https://github.com/jgeboski/bitlbee-facebook \
     && cd bitlbee-facebook \
     && git checkout ${FACEBOOK_COMMIT} \
@@ -85,21 +95,30 @@ RUN set -x \
     && make \
     && make install \
     && strip /usr/local/lib/bitlbee/facebook.so \
-    && cd /root \
+    && rm -rf /root/*
+
+# hangouts
+RUN cd /root \
     && hg clone -U https://bitbucket.org/EionRobb/purple-hangouts \
     && cd purple-hangouts \
     && hg update ${HANGOUTS_COMMIT} \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libhangouts.so \
-    && cd /root \
+    && rm -rf /root/*
+
+# naver line
+RUN cd /root \
     && git clone -n https://gitlab.com/bclemens/purple-line \
     && cd purple-line \
     && git checkout ${LINE_COMMIT} \
     && make THRIFT_STATIC=true \
     && make install \
     && strip /usr/lib/purple-2/libline.so \
-    && cd /root \
+    && rm -rf /root/*
+
+# mastodon
+RUN cd /root \
     && git clone -n https://github.com/kensanata/bitlbee-mastodon \
     && cd bitlbee-mastodon \
     && git checkout ${MASTODON_COMMIT} \
@@ -108,21 +127,30 @@ RUN set -x \
     && make \
     && make install \
     && strip /usr/local/lib/bitlbee/mastodon.so \
-    && cd /root \
+    && rm -rf /root/*
+
+# matrix
+RUN cd /root \
     && git clone -n https://github.com/matrix-org/purple-matrix \
     && cd purple-matrix \
     && git checkout ${MATRIX_COMMIT} \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libmatrix.so \
-    && cd /root \
+    && rm -rf /root/*
+
+# mattermost
+RUN cd /root \
     && git clone -n https://github.com/EionRobb/purple-mattermost \
     && cd purple-mattermost \
     && git checkout ${MATTERMOST_COMMIT} \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libmattermost.so \
-    && cd /root \
+    && rm -rf /root/*
+
+# skype
+RUN cd /root \
     && git clone -n https://github.com/EionRobb/skype4pidgin \
     && cd skype4pidgin \
     && git checkout ${SKYPE_COMMIT} \
@@ -130,20 +158,29 @@ RUN set -x \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libskypeweb.so \
-    && cd /root \
+    && rm -rf /root/*
+
+# rocket.chat
+RUN cd /root \
     && hg clone -U https://bitbucket.org/EionRobb/purple-rocketchat \
     && cd purple-rocketchat \
     && hg update ${ROCKETCHAT_COMMIT} \
     && make \
     && make install \
     && strip /usr/lib/purple-2/librocketchat.so \
-    && cd /root \
+    && rm -rf /root/*
+
+# slack
+RUN cd /root \
     && git clone -n https://github.com/dylex/slack-libpurple \
     && cd slack-libpurple \
     && git checkout ${SLACK_COMMIT} \
     && make \
     && make install \
-    && cd /root \
+    && rm -rf /root/*
+
+# steam
+RUN cd /root \
     && git clone -n https://github.com/bitlbee/bitlbee-steam \
     && cd bitlbee-steam \
     && git checkout ${STEAM_COMMIT} \
@@ -151,7 +188,10 @@ RUN set -x \
     && make \
     && make install \
     && strip /usr/local/lib/bitlbee/steam.so \
-    && cd /root \
+    && rm -rf /root/*
+
+# telegram
+RUN cd /root \
     && git clone -n https://github.com/majn/telegram-purple \
     && cd telegram-purple \
     && git checkout ${TELEGRAM_COMMIT} \
@@ -160,15 +200,21 @@ RUN set -x \
     && make \
     && make install \
     && strip /usr/lib/purple-2/telegram-purple.so \
-    && cd /root \
+    && rm -rf /root/*
+
+# wechat
+RUN cd /root \
     && git clone -n https://github.com/sbwtw/pidgin-wechat \
     && cd pidgin-wechat \
     && git checkout ${WECHAT_COMMIT} \
     && cargo build --release \
     && cp target/release/libwechat.so /usr/lib/purple-2/ \
     && strip /usr/lib/purple-2/libwechat.so \
-    && cd /root \
-    && hg -U clone https://bitbucket.org/olegoandreev/purple-vk-plugin \
+    && rm -rf /root/*
+
+# vkontakt
+RUN cd /root \
+    && hg clone -U https://bitbucket.org/olegoandreev/purple-vk-plugin \
     && cd purple-vk-plugin \
     && hg update ${VK_COMMIT} \
     && cd build \
@@ -176,22 +222,30 @@ RUN set -x \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libpurple-vk-plugin.so \
-    && cd /root \
+    && rm -rf /root/*
+
+# whatsapp
+RUN cd /root \
     && git clone -n https://github.com/jakibaki/whatsapp-purple \
     && cd whatsapp-purple \
     && git checkout ${WHATSAPP_COMMIT} \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libwhatsapp.so \
-    && cd /root \
+    && rm -rf /root/*
+
+# yahoo
+RUN cd /root \
     && git clone -n https://github.com/EionRobb/funyahoo-plusplus \
     && cd funyahoo-plusplus \
     && git checkout ${YAHOO_COMMIT} \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libyahoo-plusplus.so \
-    && apk del --purge build-dependencies \
-    && rm -rf /root/* \
+    && rm -rf /root/*
+
+# clean up, create user, set permissions
+RUN apk del --purge build-dependencies \
     && rm -rf /var/cache/apk/* \
     && adduser -u 1000 -S bitlbee \
     && addgroup -g 1000 -S bitlbee \
