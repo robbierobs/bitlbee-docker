@@ -136,7 +136,7 @@ RUN set -x \
     && hg update ${ROCKETCHAT_COMMIT} \
     && make \
     && make install \
-    && strip /usr/lib/purple-2/librocket.so \
+    && strip /usr/lib/purple-2/librocketchat.so \
     && cd /root \
     && git clone -n https://github.com/dylex/slack-libpurple \
     && cd slack-libpurple \
