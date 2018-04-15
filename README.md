@@ -13,6 +13,7 @@ Batteries-included build of BitlBee with OTR and support for:
 * Indenti.ca
 * Jabber / XMPP
 * [Mastodon](https://github.com/kensanata/bitlbee-mastodon)
+* [Matrix](https://github.com/matrix-org/purple-matrix)
 * [Mattermost](https://github.com/EionRobb/purple-mattermost)
 * [Naver LINE](https://gitlab.com/bclemens/purple-line)
 * Novell GroupWise

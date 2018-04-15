@@ -7,6 +7,7 @@ ENV FACEBOOK_COMMIT 553593d
 ENV HANGOUTS_COMMIT 0e137e6
 ENV LINE_COMMIT 156f411
 ENV MASTODON_COMMIT 0095ef0
+ENV MATRIX_COMMIT 49ea988
 ENV MATTERMOST_COMMIT bc02343
 ENV SKYPE_COMMIT c395028
 ENV SLACK_COMMIT b0f1550
@@ -32,6 +33,7 @@ RUN set -x \
     discount-dev \
     flex \
     git \
+    http-parser-dev \
     json-glib-dev \
     libotr-dev \
     libtool \
@@ -104,7 +106,14 @@ RUN set -x \
     && make install \
     && strip /usr/local/lib/bitlbee/mastodon.so \
     && cd /root \
-    && git clone -n https://EionRobb/purple-mattermost \
+    && git clone -n https://github.com/matrix-org/purple-matrix \
+    && cd purple-matrix \
+    && git checkout ${MATRIX_COMMIT} \
+    && make \
+    && make install \
+    && strip /usr/lib/purple-2/libmatrix.so \
+    && cd /root \
+    && git clone -n https://github.com/EionRobb/purple-mattermost \
     && cd purple-mattermost \
     && git checkout ${MATTERMOST_COMMIT} \
     && make \
