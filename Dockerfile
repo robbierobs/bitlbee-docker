@@ -1,6 +1,6 @@
 FROM alpine:latest
 LABEL maintainer="Brian Clemens <brian@teknik.io>"
-Label description="Bitlbee, full loaded."
+LABEL description="Bitlbee, fully loaded."
 
 ARG MAKEFLAGS=-j12
 
@@ -12,6 +12,7 @@ ENV LINE_COMMIT 156f411
 ENV MASTODON_COMMIT 0095ef0
 ENV MATRIX_COMMIT 49ea988
 ENV MATTERMOST_COMMIT bc02343
+ENV PUSHBULLET_COMMIT d0898fd
 ENV ROCKETCHAT_COMMIT fb8dcc6
 ENV SKYPE_COMMIT c395028
 ENV SLACK_COMMIT b0f1550
@@ -147,6 +148,16 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libmattermost.so \
+    && rm -rf /root/*
+
+# pushbullet
+RUN cd /root \
+    && git clone -n https://github.com/EionRobb/pidgin-pushbullet \
+    && cd pidgin-pushbullet \
+    && git checkout ${PUSHBULLET_COMMIT} \
+    && make \
+    && make install \
+    && strip /usr/lib/purple-2/libpushbullet.so \
     && rm -rf /root/*
 
 # skype
