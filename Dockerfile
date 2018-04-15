@@ -7,6 +7,7 @@ ENV FACEBOOK_COMMIT 553593d
 ENV HANGOUTS_COMMIT 0e137e6
 ENV LINE_COMMIT 156f411
 ENV MASTODON_COMMIT 0095ef0
+ENV MATTERMOST_COMMIT bc02343
 ENV SKYPE_COMMIT c395028
 ENV SLACK_COMMIT b0f1550
 ENV STEAM_COMMIT a6444d2
@@ -28,6 +29,7 @@ RUN set -x \
     clang \
     cmake \
     curl \
+    discount-dev \
     flex \
     git \
     json-glib-dev \
@@ -100,6 +102,14 @@ RUN set -x \
     && ./configure \
     && make \
     && make install \
+    && strip /usr/local/lib/bitlbee/mastodon.so \
+    && cd /root \
+    && git clone -n https://EionRobb/purple-mattermost \
+    && cd purple-mattermost \
+    && git checkout ${MATTERMOST_COMMIT} \
+    && make \
+    && make install \
+    && strip /usr/lib/purple-2/libmattermost.so \
     && cd /root \
     && git clone -n https://github.com/EionRobb/skype4pidgin \
     && cd skype4pidgin \
@@ -146,6 +156,7 @@ RUN set -x \
     && cmake .. \
     && make \
     && make install \
+    && strip /usr/lib/purple-2/libpurple-vk-plugin.so \
     && cd /root \
     && git clone -n https://github.com/EionRobb/funyahoo-plusplus \
     && cd funyahoo-plusplus \
