@@ -1,26 +1,27 @@
-## BitlBee on Alpine, fully loaded.
+## BitlBee, fully loaded.
 ![Docker Pulls](https://img.shields.io/docker/pulls/bclemens/bitlbee.svg)
 ![Docker Stars](https://img.shields.io/docker/stars/bclemens/bitlbee.svg)
 
-Batteries-included build of BitlBee on Alpine with support for:
-* AIM (via libpurple oscar)
+Batteries-included build of BitlBee with OTR and support for:
+* AIM
 * Bonjour
 * [Discord](https://github.com/sm00th/bitlbee-discord)
 * [Facebook](https://github.com/jgeboski/bitlbee-facebook)
-* Gadu-Gadu (via libpurple)
+* Gadu-Gadu
 * [Hangouts](https://bitbucket.org/EionRobb/purple-hangouts)
-* ICQ (via libpurple oscar)
-* Indenti.ca (via libpurple)
-* Jabber / XMPP (via libpurple)
+* ICQ
+* Indenti.ca
+* Jabber / XMPP
 * [Mastodon](https://github.com/kensanata/bitlbee-mastodon)
 * [Naver LINE](https://gitlab.com/bclemens/purple-line)
-* Novell GroupWise (via libpurple)
+* Novell GroupWise
 * [Skype](https://github.com/EionRobb/skype4pidgin)
 * [Slack](https://github.com/dylex/slack-libpurple)
 * [Steam](https://github.com/bitlbee/bitlbee-steam)
 * [Telegram](https://github.com/majn/telegram-purple)
+* [Wechat](https://github.com/sbwtw/pidgin-wechat)
 * [Yahoo](https://github.com/EionRobb/funyahoo-plusplus)
-* Zephyr (via libpurple)
+* Zephyr
 
 ## Typical Usage
 

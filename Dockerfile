@@ -11,6 +11,7 @@ ENV SKYPE_COMMIT c395028
 ENV SLACK_COMMIT b0f1550
 ENV STEAM_COMMIT a6444d2
 ENV TELEGRAM_COMMIT 94dd3be
+ENV WECHAT_COMMIT 17b15e5
 ENV YAHOO_COMMIT fbbd9c5
 
 RUN set -x \
@@ -21,6 +22,8 @@ RUN set -x \
     automake \
     bison \
     build-base \
+    cargo \
+    clang \
     curl \
     flex \
     git \
@@ -50,7 +53,7 @@ RUN set -x \
     && cd bitlbee \
     && git checkout ${BITLBEE_COMMIT} \
     && mkdir /bitlbee-data \
-    && ./configure --otr=plugin --purple=1 --config=/bitlbee-data \
+    && ./configure --build=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl --otr=plugin --purple=1 --ssl=openssl --config=/bitlbee-data \
     && make \
     && make install \
     && make install-dev \
@@ -125,6 +128,13 @@ RUN set -x \
     && make \
     && make install \
     && strip /usr/lib/purple-2/telegram-purple.so \
+    && cd /root \
+    && git clone -n https://github.com/sbwtw/pidgin-wechat \
+    && cd pidgin-wechat \
+    && git checkout ${WECHAT_COMMIT} \
+    && cargo build --release \
+    && cp target/release/libwechat.so /usr/lib/purple-2/ \
+    && strip /usr/lib/purple-2/libwechat.so \
     && cd /root \
     && git clone -n https://github.com/EionRobb/funyahoo-plusplus \
     && cd funyahoo-plusplus \
