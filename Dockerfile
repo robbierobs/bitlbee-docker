@@ -11,6 +11,7 @@ ENV SKYPE_COMMIT c395028
 ENV SLACK_COMMIT b0f1550
 ENV STEAM_COMMIT a6444d2
 ENV TELEGRAM_COMMIT 94dd3be
+ENV VK_COMMIT 51a91c8
 ENV WECHAT_COMMIT 17b15e5
 ENV YAHOO_COMMIT fbbd9c5
 
@@ -21,16 +22,18 @@ RUN set -x \
     autoconf \
     automake \
     bison \
+    boost-dev \
     build-base \
     cargo \
     clang \
+    cmake \
     curl \
     flex \
     git \
     json-glib-dev \
-    boost-dev \
-    libtool \
     libotr-dev \
+    libtool \
+    libxml2-dev \
     mercurial \
     openssl-dev \
     protobuf-c-dev \
@@ -135,6 +138,14 @@ RUN set -x \
     && cargo build --release \
     && cp target/release/libwechat.so /usr/lib/purple-2/ \
     && strip /usr/lib/purple-2/libwechat.so \
+    && cd /root \
+    && hg clone https://bitbucket.org/olegoandreev/purple-vk-plugin \
+    && cd purple-vk-plugin \
+    && hg update ${VK_COMMIT} \
+    && cd build \
+    && cmake .. \
+    && make \
+    && make install \
     && cd /root \
     && git clone -n https://github.com/EionRobb/funyahoo-plusplus \
     && cd funyahoo-plusplus \
