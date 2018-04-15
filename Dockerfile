@@ -16,6 +16,7 @@ ENV STEAM_COMMIT a6444d2
 ENV TELEGRAM_COMMIT 94dd3be
 ENV VK_COMMIT 51a91c8
 ENV WECHAT_COMMIT 17b15e5
+ENV WHATSAPP_COMMIT 81c7285
 ENV YAHOO_COMMIT fbbd9c5
 
 RUN set -x \
@@ -42,6 +43,7 @@ RUN set -x \
     mercurial \
     openssl-dev \
     protobuf-c-dev \
+    protobuf-dev \
     && apk add --virtual runtime-dependencies \
     glib-dev \
     gnutls-dev \
@@ -174,6 +176,13 @@ RUN set -x \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libpurple-vk-plugin.so \
+    && cd /root \
+    && git clone -n https://github.com/jakibaki/whatsapp-purple \
+    && cd whatsapp-purple \
+    && git checkout ${WHATSAPP_COMMIT} \
+    && make \
+    && make install \
+    && strip /usr/lib/purple-2/libwhatsapp.so \
     && cd /root \
     && git clone -n https://github.com/EionRobb/funyahoo-plusplus \
     && cd funyahoo-plusplus \

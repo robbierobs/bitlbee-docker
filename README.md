@@ -24,6 +24,7 @@ Batteries-included build of BitlBee with OTR and support for:
 * [Telegram](https://github.com/majn/telegram-purple)
 * [Вконтакте](https://bitbucket.org/olegoandreev/purple-vk-plugin)
 * [Wechat](https://github.com/sbwtw/pidgin-wechat)
+* [WhatsApp](https://github.com/jakibaki/whatsapp-purple)
 * [Yahoo](https://github.com/EionRobb/funyahoo-plusplus)
 * Zephyr
 
