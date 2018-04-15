@@ -9,6 +9,7 @@ ENV LINE_COMMIT 156f411
 ENV MASTODON_COMMIT 0095ef0
 ENV MATRIX_COMMIT 49ea988
 ENV MATTERMOST_COMMIT bc02343
+ENV ROCKETCHAT_COMMIT fb8dcc6
 ENV SKYPE_COMMIT c395028
 ENV SLACK_COMMIT b0f1550
 ENV STEAM_COMMIT a6444d2
@@ -83,7 +84,7 @@ RUN set -x \
     && make install \
     && strip /usr/local/lib/bitlbee/facebook.so \
     && cd /root \
-    && hg clone https://bitbucket.org/EionRobb/purple-hangouts \
+    && hg clone -U https://bitbucket.org/EionRobb/purple-hangouts \
     && cd purple-hangouts \
     && hg update ${HANGOUTS_COMMIT} \
     && make \
@@ -128,6 +129,13 @@ RUN set -x \
     && make install \
     && strip /usr/lib/purple-2/libskypeweb.so \
     && cd /root \
+    && hg clone -U https://bitbucket.org/EionRobb/purple-rocketchat \
+    && cd purple-rocketchat \
+    && hg update ${ROCKETCHAT_COMMIT} \
+    && make \
+    && make install \
+    && strip /usr/lib/purple-2/librocket.so \
+    && cd /root \
     && git clone -n https://github.com/dylex/slack-libpurple \
     && cd slack-libpurple \
     && git checkout ${SLACK_COMMIT} \
@@ -158,7 +166,7 @@ RUN set -x \
     && cp target/release/libwechat.so /usr/lib/purple-2/ \
     && strip /usr/lib/purple-2/libwechat.so \
     && cd /root \
-    && hg clone https://bitbucket.org/olegoandreev/purple-vk-plugin \
+    && hg -U clone https://bitbucket.org/olegoandreev/purple-vk-plugin \
     && cd purple-vk-plugin \
     && hg update ${VK_COMMIT} \
     && cd build \

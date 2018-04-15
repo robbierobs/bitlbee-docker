@@ -17,6 +17,7 @@ Batteries-included build of BitlBee with OTR and support for:
 * [Mattermost](https://github.com/EionRobb/purple-mattermost)
 * [Naver LINE](https://gitlab.com/bclemens/purple-line)
 * Novell GroupWise
+* [Rocket.Chat](https://bitbucket.org/EionRobb/purple-rocketchat)
 * [Skype](https://github.com/EionRobb/skype4pidgin)
 * [Slack](https://github.com/dylex/slack-libpurple)
 * [Steam](https://github.com/bitlbee/bitlbee-steam)
