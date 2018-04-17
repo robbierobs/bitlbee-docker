@@ -257,6 +257,7 @@ RUN cd /root \
 
 # clean up, create user, set permissions
 RUN apk del --purge build-dependencies \
+    && rm -rf /root/.* \
     && rm -rf /var/cache/apk/* \
     && adduser -u 1000 -S bitlbee \
     && addgroup -g 1000 -S bitlbee \
