@@ -1,8 +1,5 @@
 ## BitlBee, fully loaded.
-![Docker Pulls](https://img.shields.io/docker/pulls/bclemens/bitlbee.svg)
-![Docker Stars](https://img.shields.io/docker/stars/bclemens/bitlbee.svg)
-![Size](https://images.microbadger.com/badges/image/bclemens/bitlbee.svg)
-![Version](https://images.microbadger.com/badges/version/bclemens/bitlbee.svg)
+![Docker Pulls](https://img.shields.io/docker/pulls/bclemens/bitlbee.svg) ![Docker Stars](https://img.shields.io/docker/stars/bclemens/bitlbee.svg) ![Size](https://images.microbadger.com/badges/image/bclemens/bitlbee.svg) ![Version](https://images.microbadger.com/badges/version/bclemens/bitlbee.svg)
 
 Batteries-included build of BitlBee with OTR and support for:
 * AIM
