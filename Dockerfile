@@ -82,7 +82,8 @@ RUN cd /root \
     && make install \
     && make install-dev \
     && make install-etc \
-    && rm -rf /root/ /root/.*
+    && rm -rf /root \
+    && mkdir /root
 
 # discord
 RUN cd /root \
@@ -94,7 +95,8 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/local/lib/bitlbee/discord.so \
-    && rm -rf /root/ /root/.*
+    && rm -rf /root \
+    && mkdir /root
 
 # facebook
 RUN cd /root \
@@ -105,7 +107,8 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/local/lib/bitlbee/facebook.so \
-    && rm -rf /root/ /root/.*
+    && rm -rf /root \
+    && mkdir /root
 
 # hangouts
 RUN cd /root \
@@ -115,7 +118,8 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libhangouts.so \
-    && rm -rf /root/ /root/.*
+    && rm -rf /root \
+    && mkdir /root
 
 # naver line
 RUN cd /root \
@@ -125,7 +129,8 @@ RUN cd /root \
     && make THRIFT_STATIC=true \
     && make install \
     && strip /usr/lib/purple-2/libline.so \
-    && rm -rf /root/ /root/.*
+    && rm -rf /root \
+    && mkdir /root
 
 # mastodon
 RUN cd /root \
@@ -137,7 +142,8 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/local/lib/bitlbee/mastodon.so \
-    && rm -rf /root/* /root/.*
+    && rm -rf /root \
+    && mkdir /root
 
 # matrix
 RUN cd /root \
@@ -147,7 +153,8 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libmatrix.so \
-    && rm -rf /root/* /root/.*
+    && rm -rf /root \
+    && mkdir /root
 
 # mattermost
 RUN cd /root \
@@ -157,7 +164,8 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libmattermost.so \
-    && rm -rf /root/* /root/.*
+    && rm -rf /root \
+    && mkdir /root
 
 # pushbullet
 RUN cd /root \
@@ -167,7 +175,8 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libpushbullet.so \
-    && rm -rf /root/* /root/.*
+    && rm -rf /root \
+    && mkdir /root
 
 # skype
 RUN cd /root \
@@ -178,7 +187,8 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libskypeweb.so \
-    && rm -rf /root/* /root/.*
+    && rm -rf /root \
+    && mkdir /root
 
 # rocket.chat
 RUN cd /root \
@@ -188,7 +198,8 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/librocketchat.so \
-    && rm -rf /root/* /root/.*
+    && rm -rf /root \
+    && mkdir /root
 
 # slack
 RUN cd /root \
@@ -197,7 +208,8 @@ RUN cd /root \
     && git checkout ${SLACK_COMMIT} \
     && make \
     && make install \
-    && rm -rf /root/* /root/.*
+    && rm -rf /root \
+    && mkdir /root
 
 # steam
 RUN cd /root \
@@ -208,7 +220,8 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/local/lib/bitlbee/steam.so \
-    && rm -rf /root/* /root/.*
+    && rm -rf /root \
+    && mkdir /root
 
 # telegram
 RUN cd /root \
@@ -220,7 +233,8 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/telegram-purple.so \
-    && rm -rf /root/* /root/.*
+    && rm -rf /root \
+    && mkdir /root
 
 # wechat
 RUN cd /root \
@@ -230,7 +244,8 @@ RUN cd /root \
     && cargo build --release \
     && cp target/release/libwechat.so /usr/lib/purple-2/ \
     && strip /usr/lib/purple-2/libwechat.so \
-    && rm -rf /root/* /root/.*
+    && rm -rf /root \
+    && mkdir /root
 
 # vkontakt
 RUN cd /root \
@@ -242,7 +257,8 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libpurple-vk-plugin.so \
-    && rm -rf /root/* /root/.*
+    && rm -rf /root \
+    && mkdir /root
 
 # whatsapp
 RUN cd /root \
@@ -252,7 +268,8 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libwhatsapp.so \
-    && rm -rf /root/* /root/.*
+    && rm -rf /root \
+    && mkdir /root
 
 # yahoo
 RUN cd /root \
@@ -262,11 +279,13 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libyahoo-plusplus.so \
-    && rm -rf /root/* /root/.*
+    && rm -rf /root \
+    && mkdir /root
 
 # clean up, create user, set permissions
 RUN apk del --purge build-dependencies \
-    && rm -rf /root/ /root/.* \
+    && rm -rf /root \
+    && mkdir /root \
     && rm -rf /var/cache/apk/* \
     && adduser -u 1000 -S bitlbee \
     && addgroup -g 1000 -S bitlbee \
