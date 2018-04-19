@@ -1,8 +1,17 @@
 FROM alpine:latest
-LABEL maintainer="Brian Clemens <brian@teknik.io>"
-LABEL description="Bitlbee, fully loaded."
 
+ARG BUILD_DATE
 ARG MAKEFLAGS=-j12
+ARG VCS_REF
+
+LABEL org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.name="BitlBee" \
+      org.label-schema.description="BitlBee, fully loaded." \
+      org.label-schema.url="https://tiuxo.com" \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-url="https://github.com/brianclemens/bitlbee" \
+      org.label-schema.vendor="Tiuxo" \
+      org.label-schema.schema-version="1.0"
 
 ENV BITLBEE_COMMIT 246b98b
 ENV DISCORD_COMMIT 4fc5649
@@ -73,7 +82,7 @@ RUN cd /root \
     && make install \
     && make install-dev \
     && make install-etc \
-    && rm -rf /root/*
+    && rm -rf /root/ /root/.*
 
 # discord
 RUN cd /root \
@@ -85,7 +94,7 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/local/lib/bitlbee/discord.so \
-    && rm -rf /root/*
+    && rm -rf /root/ /root/.*
 
 # facebook
 RUN cd /root \
@@ -96,7 +105,7 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/local/lib/bitlbee/facebook.so \
-    && rm -rf /root/*
+    && rm -rf /root/ /root/.*
 
 # hangouts
 RUN cd /root \
@@ -106,7 +115,7 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libhangouts.so \
-    && rm -rf /root/*
+    && rm -rf /root/ /root/.*
 
 # naver line
 RUN cd /root \
@@ -116,7 +125,7 @@ RUN cd /root \
     && make THRIFT_STATIC=true \
     && make install \
     && strip /usr/lib/purple-2/libline.so \
-    && rm -rf /root/*
+    && rm -rf /root/ /root/.*
 
 # mastodon
 RUN cd /root \
@@ -128,7 +137,7 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/local/lib/bitlbee/mastodon.so \
-    && rm -rf /root/*
+    && rm -rf /root/* /root/.*
 
 # matrix
 RUN cd /root \
@@ -138,7 +147,7 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libmatrix.so \
-    && rm -rf /root/*
+    && rm -rf /root/* /root/.*
 
 # mattermost
 RUN cd /root \
@@ -148,7 +157,7 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libmattermost.so \
-    && rm -rf /root/*
+    && rm -rf /root/* /root/.*
 
 # pushbullet
 RUN cd /root \
@@ -158,7 +167,7 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libpushbullet.so \
-    && rm -rf /root/*
+    && rm -rf /root/* /root/.*
 
 # skype
 RUN cd /root \
@@ -169,7 +178,7 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libskypeweb.so \
-    && rm -rf /root/*
+    && rm -rf /root/* /root/.*
 
 # rocket.chat
 RUN cd /root \
@@ -179,7 +188,7 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/librocketchat.so \
-    && rm -rf /root/*
+    && rm -rf /root/* /root/.*
 
 # slack
 RUN cd /root \
@@ -188,7 +197,7 @@ RUN cd /root \
     && git checkout ${SLACK_COMMIT} \
     && make \
     && make install \
-    && rm -rf /root/*
+    && rm -rf /root/* /root/.*
 
 # steam
 RUN cd /root \
@@ -199,7 +208,7 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/local/lib/bitlbee/steam.so \
-    && rm -rf /root/*
+    && rm -rf /root/* /root/.*
 
 # telegram
 RUN cd /root \
@@ -211,7 +220,7 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/telegram-purple.so \
-    && rm -rf /root/*
+    && rm -rf /root/* /root/.*
 
 # wechat
 RUN cd /root \
@@ -221,7 +230,7 @@ RUN cd /root \
     && cargo build --release \
     && cp target/release/libwechat.so /usr/lib/purple-2/ \
     && strip /usr/lib/purple-2/libwechat.so \
-    && rm -rf /root/*
+    && rm -rf /root/* /root/.*
 
 # vkontakt
 RUN cd /root \
@@ -233,7 +242,7 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libpurple-vk-plugin.so \
-    && rm -rf /root/*
+    && rm -rf /root/* /root/.*
 
 # whatsapp
 RUN cd /root \
@@ -243,7 +252,7 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libwhatsapp.so \
-    && rm -rf /root/*
+    && rm -rf /root/* /root/.*
 
 # yahoo
 RUN cd /root \
@@ -253,11 +262,11 @@ RUN cd /root \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libyahoo-plusplus.so \
-    && rm -rf /root/*
+    && rm -rf /root/* /root/.*
 
 # clean up, create user, set permissions
 RUN apk del --purge build-dependencies \
-    && rm -rf /root/.* \
+    && rm -rf /root/ /root/.* \
     && rm -rf /var/cache/apk/* \
     && adduser -u 1000 -S bitlbee \
     && addgroup -g 1000 -S bitlbee \
