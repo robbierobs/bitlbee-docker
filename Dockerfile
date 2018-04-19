@@ -9,7 +9,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.description="BitlBee, fully loaded." \
       org.label-schema.url="https://tiuxo.com" \
       org.label-schema.vcs-ref=$VCS_REF \
-      org.label-schema.vcs-url="https://github.com/brianclemens/bitlbee" \
+      org.label-schema.vcs-url="https://github.com/brianclemens/bitlbee-docker" \
       org.label-schema.vendor="Tiuxo" \
       org.label-schema.schema-version="1.0"
 
