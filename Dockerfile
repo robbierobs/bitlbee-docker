@@ -46,14 +46,14 @@ ENV BITLBEE_COMMIT=246b98b \
         protobuf-c"
 
 # bitlbee
-RUN apk add --no-cache --update --virtual build-dependencies \
+RUN apk add --update --no-cache --virtual build-dependencies \
     build-base \
     git \
     gnutls-dev \
     libotr-dev \
     pidgin-dev \
     openldap-dev \
-    && apk add --virtual runtime-dependencies ${RUNTIME_DEPS} \
+    && apk add --no-cache --virtual runtime-dependencies ${RUNTIME_DEPS} \
     && cd /root \
     && git clone -n https://github.com/bitlbee/bitlbee \
     && cd bitlbee \
@@ -71,10 +71,10 @@ RUN apk add --no-cache --update --virtual build-dependencies \
     && chown bitlbee:bitlbee /var/run/bitlbee.pid \
     && rm -rf /root \
     && mkdir /root \
-    && apk del --purge build-dependencies \
+    && apk del --purge build-dependencies
 
 # discord
-RUN apk add --no-cache --update --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
     autoconf \
     automake \
     build-base \
@@ -94,7 +94,7 @@ RUN apk add --no-cache --update --virtual build-dependencies \
     && apk del --purge build-dependencies \
 
 # facebook
-RUN apk add --no-cache --update --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
     autoconf \
     automake \
     build-base \
@@ -114,7 +114,7 @@ RUN apk add --no-cache --update --virtual build-dependencies \
     && apk del --purge build-dependencies \
 
 # hangouts
-RUN apk add --no-cache --update --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
     build-base \
     json-glib-dev \
     mercurial \
@@ -132,7 +132,7 @@ RUN apk add --no-cache --update --virtual build-dependencies \
     && apk del --purge build-dependencies \
 
 # naver line
-RUN apk add --no-cache --update --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
     boost-dev \
     build-base \
     curl \
@@ -153,7 +153,7 @@ RUN apk add --no-cache --update --virtual build-dependencies \
     && apk del --purge build-dependencies \
 
 # mastodon
-RUN apk add --no-cache --update --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
     autoconf \
     automake \
     build-base \
@@ -173,7 +173,7 @@ RUN apk add --no-cache --update --virtual build-dependencies \
     && apk del --purge build-dependencies \
 
 # matrix
-RUN apk add --no-cache --update --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
     build-base \
     http-parser-dev \
     json-glib-dev \
@@ -191,7 +191,7 @@ RUN apk add --no-cache --update --virtual build-dependencies \
     && apk del --purge build-dependencies \
 
 # mattermost
-RUN apk add --no-cache --update --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
     build-base \
     discount-dev \
     git \
@@ -209,7 +209,7 @@ RUN apk add --no-cache --update --virtual build-dependencies \
     && apk del --purge build-dependencies \
 
 # pushbullet
-RUN apk add --no-cache --update --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
     build-base \
     git \
     json-glib-dev \
@@ -226,7 +226,7 @@ RUN apk add --no-cache --update --virtual build-dependencies \
     && apk del --purge build-dependencies \
 
 # skype
-RUN apk add --no-cache --update --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
     build-base \
     git \
     json-glib-dev \
@@ -244,7 +244,7 @@ RUN apk add --no-cache --update --virtual build-dependencies \
     && apk del --purge build-dependencies \
 
 # rocket.chat
-RUN apk add --no-cache --update --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
     build-base \
     discount-dev \
     json-glib-dev \
@@ -262,7 +262,7 @@ RUN apk add --no-cache --update --virtual build-dependencies \
     && apk del --purge build-dependencies \
 
 # slack
-RUN apk add --no-cache --update --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
     build-base \
     git \
     pidgin-dev \
@@ -277,7 +277,7 @@ RUN apk add --no-cache --update --virtual build-dependencies \
     && apk del --purge build-dependencies \
 
 # steam
-RUN apk add --no-cache --update --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
     autoconf \
     automake \
     build-base \
@@ -296,7 +296,7 @@ RUN apk add --no-cache --update --virtual build-dependencies \
     && apk del --purge build-dependencies \
 
 # telegram
-RUN apk add --no-cache --update --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
     build-base \
     git \
     pidgin-dev \
@@ -314,7 +314,7 @@ RUN apk add --no-cache --update --virtual build-dependencies \
     && apk del --purge build-dependencies \
 
 # wechat
-RUN apk add --no-cache --update --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
     build-base \
     cargo \
     clang \
@@ -333,7 +333,7 @@ RUN apk add --no-cache --update --virtual build-dependencies \
     && apk del --purge build-dependencies \
 
 # vkontakt
-RUN apk add --no-cache --update --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
     build-base \
     cmake \
     libtool \
@@ -354,7 +354,7 @@ RUN apk add --no-cache --update --virtual build-dependencies \
     && apk del --purge build-dependencies \
 
 # whatsapp
-RUN apk add --no-cache --update --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
     build-base \
     git \
     pidgin-dev \
@@ -371,7 +371,7 @@ RUN apk add --no-cache --update --virtual build-dependencies \
     && apk del --purge build-dependencies \
 
 # yahoo
-RUN apk add --no-cache --update --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
     build-base \
     git \
     json-glib-dev \
