@@ -30,63 +30,65 @@ ENV BITLBEE_COMMIT=246b98b \
     VK_COMMIT=51a91c8 \
     WECHAT_COMMIT=17b15e5 \
     WHATSAPP_COMMIT=81c7285 \
-    YAHOO_COMMIT=fbbd9c5
-
-RUN apk update \
-    && apk upgrade \
-    && apk add --virtual build-dependencies \
-    autoconf \
-    automake \
-    bison \
-    boost-dev \
-    build-base \
-    cargo \
-    clang \
-    cmake \
-    curl \
-    discount-dev \
-    flex \
-    git \
-    http-parser-dev \
-    json-glib-dev \
-    libotr-dev \
-    libtool \
-    libxml2-dev \
-    mercurial \
-    openssl-dev \
-    protobuf-c-dev \
-    protobuf-dev \
-    && apk add --virtual runtime-dependencies \
-    glib-dev \
-    gnutls-dev \
-    json-glib \
-    libgcrypt-dev \
-    libotr \
-    libpurple \
-    libpurple-bonjour \
-    libpurple-oscar \
-    libpurple-xmpp \
-    libwebp-dev \
-    openssl \
-    pidgin-dev \
-    protobuf-c
+    YAHOO_COMMIT=fbbd9c5 \
+    BUILD_DEPS=" \
+        autoconf \
+        automake \
+        bison \
+        build-base \
+        curl \
+        discount-dev \
+        flex \
+        json-glib-dev \
+        protobuf-c-dev" \
+    RUNTIME_DEPS=" \
+        glib-dev \
+        gnutls-dev \
+        json-glib \
+        libgcrypt-dev \
+        libotr \
+        libpurple \
+        libpurple-bonjour \
+        libpurple-oscar \
+        libpurple-xmpp \
+        libwebp-dev \
+        openldap \
+        pidgin-dev \
+        protobuf-c"
 
 # bitlbee
-RUN cd /root \
+RUN apk update && apk upgrade \
+    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+    git \
+    libotr-dev \
+    openldap-dev \
+    && apk add --virtual runtime-dependencies ${RUNTIME_DEPS} \
+    && cd /root \
     && git clone -n https://github.com/bitlbee/bitlbee \
     && cd bitlbee \
     && git checkout ${BITLBEE_COMMIT} \
     && mkdir /bitlbee-data \
-    && ./configure --build=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl --otr=plugin --purple=1 --ssl=openssl --config=/bitlbee-data \
+    && ./configure --build=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl --otr=plugin --purple=1 --ldap=0 --config=/bitlbee-data \
     && make \
     && make install \
     && make install-dev \
     && make install-etc \
+    && adduser -u 1000 -S bitlbee \
+    && addgroup -g 1000 -S bitlbee \
+    && chown -R bitlbee:bitlbee /bitlbee-data \
+    && touch /var/run/bitlbee.pid \
+    && chown bitlbee:bitlbee /var/run/bitlbee.pid \
     && rm -rf /root \
-    && mkdir /root
+    && mkdir /root \
+    && apk del --purge build-dependencies \
+    && rm -rf /var/cache/apk/*
 
 # discord
-RUN cd /root \
+RUN apk update && apk upgrade \
+    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+    git \
+    libtool \
+    && cd /root \
     && git clone -n https://github.com/sm00th/bitlbee-discord \
     && cd bitlbee-discord \
     && git checkout ${DISCORD_COMMIT} \
@@ -96,10 +98,16 @@ RUN cd /root \
     && make install \
     && strip /usr/local/lib/bitlbee/discord.so \
     && rm -rf /root \
-    && mkdir /root
+    && mkdir /root \
+    && apk del --purge build-dependencies \
+    && rm -rf /var/cache/apk/*
 
 # facebook
-RUN cd /root \
+RUN apk update && apk upgrade \
+    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+    git \
+    libtool \
+    && cd /root \
     && git clone -n https://github.com/jgeboski/bitlbee-facebook \
     && cd bitlbee-facebook \
     && git checkout ${FACEBOOK_COMMIT} \
@@ -108,10 +116,15 @@ RUN cd /root \
     && make install \
     && strip /usr/local/lib/bitlbee/facebook.so \
     && rm -rf /root \
-    && mkdir /root
+    && mkdir /root \
+    && apk del --purge build-dependencies \
+    && rm -rf /var/cache/apk/*
 
 # hangouts
-RUN cd /root \
+RUN apk update && apk upgrade \
+    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+    mercurial \
+    && cd /root \
     && hg clone -U https://bitbucket.org/EionRobb/purple-hangouts \
     && cd purple-hangouts \
     && hg update ${HANGOUTS_COMMIT} \
@@ -119,10 +132,27 @@ RUN cd /root \
     && make install \
     && strip /usr/lib/purple-2/libhangouts.so \
     && rm -rf /root \
-    && mkdir /root
+    && mkdir /root \
+    && apk del --purge build-dependencies \
+    && rm -rf /var/cache/apk/*
 
 # naver line
-RUN cd /root \
+RUN apk update && apk upgrade \
+    && apk add --virtual build-dependencies \
+    autoconf \
+    automake \
+    bison \
+    boost-dev \
+    build-base \
+    curl \
+    flex \
+    git \
+    json-glib-dev \
+    libotr-dev \
+    libtool \
+    openssl-dev \
+    protobuf-c-dev \
+    && cd /root \
     && git clone -n https://gitlab.com/bclemens/purple-line \
     && cd purple-line \
     && git checkout ${LINE_COMMIT} \
@@ -130,10 +160,16 @@ RUN cd /root \
     && make install \
     && strip /usr/lib/purple-2/libline.so \
     && rm -rf /root \
-    && mkdir /root
+    && mkdir /root \
+    && apk del --purge build-dependencies \
+    && rm -rf /var/cache/apk/*
 
 # mastodon
-RUN cd /root \
+RUN apk update && apk upgrade \
+    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+    git \
+    libtool \
+    && cd /root \
     && git clone -n https://github.com/kensanata/bitlbee-mastodon \
     && cd bitlbee-mastodon \
     && git checkout ${MASTODON_COMMIT} \
@@ -143,10 +179,16 @@ RUN cd /root \
     && make install \
     && strip /usr/local/lib/bitlbee/mastodon.so \
     && rm -rf /root \
-    && mkdir /root
+    && mkdir /root \
+    && apk del --purge build-dependencies \
+    && rm -rf /var/cache/apk/*
 
 # matrix
-RUN cd /root \
+RUN apk update && apk upgrade \
+    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+    http-parser-dev \
+    git \
+    && cd /root \
     && git clone -n https://github.com/matrix-org/purple-matrix \
     && cd purple-matrix \
     && git checkout ${MATRIX_COMMIT} \
@@ -154,10 +196,15 @@ RUN cd /root \
     && make install \
     && strip /usr/lib/purple-2/libmatrix.so \
     && rm -rf /root \
-    && mkdir /root
+    && mkdir /root \
+    && apk del --purge build-dependencies \
+    && rm -rf /var/cache/apk/*
 
 # mattermost
-RUN cd /root \
+RUN apk update && apk upgrade \
+    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+    git \
+    && cd /root \
     && git clone -n https://github.com/EionRobb/purple-mattermost \
     && cd purple-mattermost \
     && git checkout ${MATTERMOST_COMMIT} \
@@ -165,10 +212,15 @@ RUN cd /root \
     && make install \
     && strip /usr/lib/purple-2/libmattermost.so \
     && rm -rf /root \
-    && mkdir /root
+    && mkdir /root \
+    && apk del --purge build-dependencies \
+    && rm -rf /var/cache/apk/*
 
 # pushbullet
-RUN cd /root \
+RUN apk update && apk upgrade \
+    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+    git \
+    && cd /root \
     && git clone -n https://github.com/EionRobb/pidgin-pushbullet \
     && cd pidgin-pushbullet \
     && git checkout ${PUSHBULLET_COMMIT} \
@@ -176,10 +228,15 @@ RUN cd /root \
     && make install \
     && strip /usr/lib/purple-2/libpushbullet.so \
     && rm -rf /root \
-    && mkdir /root
+    && mkdir /root \
+    && apk del --purge build-dependencies \
+    && rm -rf /var/cache/apk/*
 
 # skype
-RUN cd /root \
+RUN apk update && apk upgrade \
+    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+    git \
+    && cd /root \
     && git clone -n https://github.com/EionRobb/skype4pidgin \
     && cd skype4pidgin \
     && git checkout ${SKYPE_COMMIT} \
@@ -188,10 +245,15 @@ RUN cd /root \
     && make install \
     && strip /usr/lib/purple-2/libskypeweb.so \
     && rm -rf /root \
-    && mkdir /root
+    && mkdir /root \
+    && apk del --purge build-dependencies \
+    && rm -rf /var/cache/apk/*
 
 # rocket.chat
-RUN cd /root \
+RUN apk update && apk upgrade \
+    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+    mercurial \
+    && cd /root \
     && hg clone -U https://bitbucket.org/EionRobb/purple-rocketchat \
     && cd purple-rocketchat \
     && hg update ${ROCKETCHAT_COMMIT} \
@@ -199,20 +261,31 @@ RUN cd /root \
     && make install \
     && strip /usr/lib/purple-2/librocketchat.so \
     && rm -rf /root \
-    && mkdir /root
+    && mkdir /root \
+    && apk del --purge build-dependencies \
+    && rm -rf /var/cache/apk/*
 
 # slack
-RUN cd /root \
+RUN apk update && apk upgrade \
+    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+    git \
+    && cd /root \
     && git clone -n https://github.com/dylex/slack-libpurple \
     && cd slack-libpurple \
     && git checkout ${SLACK_COMMIT} \
     && make \
     && make install \
     && rm -rf /root \
-    && mkdir /root
+    && mkdir /root \
+    && apk del --purge build-dependencies \
+    && rm -rf /var/cache/apk/*
 
 # steam
-RUN cd /root \
+RUN apk update && apk upgrade \
+    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+    git \
+    libtool \
+    && cd /root \
     && git clone -n https://github.com/bitlbee/bitlbee-steam \
     && cd bitlbee-steam \
     && git checkout ${STEAM_COMMIT} \
@@ -221,10 +294,15 @@ RUN cd /root \
     && make install \
     && strip /usr/local/lib/bitlbee/steam.so \
     && rm -rf /root \
-    && mkdir /root
+    && mkdir /root \
+    && apk del --purge build-dependencies \
+    && rm -rf /var/cache/apk/*
 
 # telegram
-RUN cd /root \
+RUN apk update && apk upgrade \
+    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+    git \
+    && cd /root \
     && git clone -n https://github.com/majn/telegram-purple \
     && cd telegram-purple \
     && git checkout ${TELEGRAM_COMMIT} \
@@ -234,10 +312,18 @@ RUN cd /root \
     && make install \
     && strip /usr/lib/purple-2/telegram-purple.so \
     && rm -rf /root \
-    && mkdir /root
+    && mkdir /root \
+    && apk del --purge build-dependencies \
+    && rm -rf /var/cache/apk/*
 
 # wechat
-RUN cd /root \
+RUN apk update && apk upgrade \
+    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+    cargo \
+    clang \
+    git \
+    openssl-dev \
+    && cd /root \
     && git clone -n https://github.com/sbwtw/pidgin-wechat \
     && cd pidgin-wechat \
     && git checkout ${WECHAT_COMMIT} \
@@ -245,10 +331,18 @@ RUN cd /root \
     && cp target/release/libwechat.so /usr/lib/purple-2/ \
     && strip /usr/lib/purple-2/libwechat.so \
     && rm -rf /root \
-    && mkdir /root
+    && mkdir /root \
+    && apk del --purge build-dependencies \
+    && rm -rf /var/cache/apk/*
 
 # vkontakt
-RUN cd /root \
+RUN apk update && apk upgrade \
+    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+    cmake \
+    libtool \
+    libxml2-dev \
+    mercurial \
+    && cd /root \
     && hg clone -U https://bitbucket.org/olegoandreev/purple-vk-plugin \
     && cd purple-vk-plugin \
     && hg update ${VK_COMMIT} \
@@ -258,10 +352,16 @@ RUN cd /root \
     && make install \
     && strip /usr/lib/purple-2/libpurple-vk-plugin.so \
     && rm -rf /root \
-    && mkdir /root
+    && mkdir /root \
+    && apk del --purge build-dependencies \
+    && rm -rf /var/cache/apk/*
 
 # whatsapp
-RUN cd /root \
+RUN apk update && apk upgrade \
+    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+    git \
+    protobuf-dev \
+    && cd /root \
     && git clone -n https://github.com/jakibaki/whatsapp-purple \
     && cd whatsapp-purple \
     && git checkout ${WHATSAPP_COMMIT} \
@@ -269,10 +369,15 @@ RUN cd /root \
     && make install \
     && strip /usr/lib/purple-2/libwhatsapp.so \
     && rm -rf /root \
-    && mkdir /root
+    && mkdir /root \
+    && apk del --purge build-dependencies \
+    && rm -rf /var/cache/apk/*
 
 # yahoo
-RUN cd /root \
+RUN apk update && apk upgrade \
+    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+    git \
+    && cd /root \
     && git clone -n https://github.com/EionRobb/funyahoo-plusplus \
     && cd funyahoo-plusplus \
     && git checkout ${YAHOO_COMMIT} \
@@ -280,18 +385,9 @@ RUN cd /root \
     && make install \
     && strip /usr/lib/purple-2/libyahoo-plusplus.so \
     && rm -rf /root \
-    && mkdir /root
-
-# clean up, create user, set permissions
-RUN apk del --purge build-dependencies \
-    && rm -rf /root \
     && mkdir /root \
-    && rm -rf /var/cache/apk/* \
-    && adduser -u 1000 -S bitlbee \
-    && addgroup -g 1000 -S bitlbee \
-    && chown -R bitlbee:bitlbee /bitlbee-data \
-    && touch /var/run/bitlbee.pid \
-    && chown bitlbee:bitlbee /var/run/bitlbee.pid; exit 0
+    && apk del --purge build-dependencies \
+    && rm -rf /var/cache/apk/*
 
 USER bitlbee
 VOLUME /bitlbee-data
