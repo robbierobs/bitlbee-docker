@@ -31,16 +31,6 @@ ENV BITLBEE_COMMIT=246b98b \
     WECHAT_COMMIT=17b15e5 \
     WHATSAPP_COMMIT=81c7285 \
     YAHOO_COMMIT=fbbd9c5 \
-    BUILD_DEPS=" \
-        autoconf \
-        automake \
-        bison \
-        build-base \
-        curl \
-        discount-dev \
-        flex \
-        json-glib-dev \
-        protobuf-c-dev" \
     RUNTIME_DEPS=" \
         glib-dev \
         gnutls \
@@ -56,8 +46,8 @@ ENV BITLBEE_COMMIT=246b98b \
         protobuf-c"
 
 # bitlbee
-RUN apk update && apk upgrade \
-    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+RUN apk add --no-cache --update --virtual build-dependencies \
+    build-base \
     git \
     gnutls-dev \
     libotr-dev \
@@ -82,11 +72,12 @@ RUN apk update && apk upgrade \
     && rm -rf /root \
     && mkdir /root \
     && apk del --purge build-dependencies \
-    && rm -rf /var/cache/apk/*
 
 # discord
-RUN apk update && apk upgrade \
-    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+RUN apk add --no-cache --update --virtual build-dependencies \
+    autoconf \
+    automake \
+    build-base \
     git \
     libtool \
     && cd /root \
@@ -101,12 +92,14 @@ RUN apk update && apk upgrade \
     && rm -rf /root \
     && mkdir /root \
     && apk del --purge build-dependencies \
-    && rm -rf /var/cache/apk/*
 
 # facebook
-RUN apk update && apk upgrade \
-    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+RUN apk add --no-cache --update --virtual build-dependencies \
+    autoconf \
+    automake \
+    build-base \
     git \
+    json-glib-dev \
     libtool \
     && cd /root \
     && git clone -n https://github.com/jgeboski/bitlbee-facebook \
@@ -119,13 +112,14 @@ RUN apk update && apk upgrade \
     && rm -rf /root \
     && mkdir /root \
     && apk del --purge build-dependencies \
-    && rm -rf /var/cache/apk/*
 
 # hangouts
-RUN apk update && apk upgrade \
-    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+RUN apk add --no-cache --update --virtual build-dependencies \
+    build-base \
+    json-glib-dev \
     mercurial \
     pidgin-dev \
+    protobuf-c-dev \
     && cd /root \
     && hg clone -U https://bitbucket.org/EionRobb/purple-hangouts \
     && cd purple-hangouts \
@@ -136,25 +130,17 @@ RUN apk update && apk upgrade \
     && rm -rf /root \
     && mkdir /root \
     && apk del --purge build-dependencies \
-    && rm -rf /var/cache/apk/*
 
 # naver line
-RUN apk update && apk upgrade \
-    && apk add --virtual build-dependencies \
-    autoconf \
-    automake \
-    bison \
+RUN apk add --no-cache --update --virtual build-dependencies \
     boost-dev \
     build-base \
     curl \
     flex \
     git \
-    json-glib-dev \
-    libotr-dev \
     libtool \
     openssl-dev \
     pidgin-dev \
-    protobuf-c-dev \
     && cd /root \
     && git clone -n https://gitlab.com/bclemens/purple-line \
     && cd purple-line \
@@ -165,11 +151,12 @@ RUN apk update && apk upgrade \
     && rm -rf /root \
     && mkdir /root \
     && apk del --purge build-dependencies \
-    && rm -rf /var/cache/apk/*
 
 # mastodon
-RUN apk update && apk upgrade \
-    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+RUN apk add --no-cache --update --virtual build-dependencies \
+    autoconf \
+    automake \
+    build-base \
     git \
     libtool \
     && cd /root \
@@ -184,12 +171,12 @@ RUN apk update && apk upgrade \
     && rm -rf /root \
     && mkdir /root \
     && apk del --purge build-dependencies \
-    && rm -rf /var/cache/apk/*
 
 # matrix
-RUN apk update && apk upgrade \
-    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+RUN apk add --no-cache --update --virtual build-dependencies \
+    build-base \
     http-parser-dev \
+    json-glib-dev \
     git \
     pidgin-dev \
     && cd /root \
@@ -202,12 +189,13 @@ RUN apk update && apk upgrade \
     && rm -rf /root \
     && mkdir /root \
     && apk del --purge build-dependencies \
-    && rm -rf /var/cache/apk/*
 
 # mattermost
-RUN apk update && apk upgrade \
-    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+RUN apk add --no-cache --update --virtual build-dependencies \
+    build-base \
+    discount-dev \
     git \
+    json-glib-dev \
     pidgin-dev \
     && cd /root \
     && git clone -n https://github.com/EionRobb/purple-mattermost \
@@ -219,12 +207,12 @@ RUN apk update && apk upgrade \
     && rm -rf /root \
     && mkdir /root \
     && apk del --purge build-dependencies \
-    && rm -rf /var/cache/apk/*
 
 # pushbullet
-RUN apk update && apk upgrade \
-    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+RUN apk add --no-cache --update --virtual build-dependencies \
+    build-base \
     git \
+    json-glib-dev \
     pidgin-dev \
     && cd /root \
     && git clone -n https://github.com/EionRobb/pidgin-pushbullet \
@@ -236,12 +224,12 @@ RUN apk update && apk upgrade \
     && rm -rf /root \
     && mkdir /root \
     && apk del --purge build-dependencies \
-    && rm -rf /var/cache/apk/*
 
 # skype
-RUN apk update && apk upgrade \
-    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+RUN apk add --no-cache --update --virtual build-dependencies \
+    build-base \
     git \
+    json-glib-dev \
     pidgin-dev \
     && cd /root \
     && git clone -n https://github.com/EionRobb/skype4pidgin \
@@ -254,11 +242,12 @@ RUN apk update && apk upgrade \
     && rm -rf /root \
     && mkdir /root \
     && apk del --purge build-dependencies \
-    && rm -rf /var/cache/apk/*
 
 # rocket.chat
-RUN apk update && apk upgrade \
-    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+RUN apk add --no-cache --update --virtual build-dependencies \
+    build-base \
+    discount-dev \
+    json-glib-dev \
     mercurial \
     pidgin-dev \
     && cd /root \
@@ -271,11 +260,10 @@ RUN apk update && apk upgrade \
     && rm -rf /root \
     && mkdir /root \
     && apk del --purge build-dependencies \
-    && rm -rf /var/cache/apk/*
 
 # slack
-RUN apk update && apk upgrade \
-    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+RUN apk add --no-cache --update --virtual build-dependencies \
+    build-base \
     git \
     pidgin-dev \
     && cd /root \
@@ -287,11 +275,12 @@ RUN apk update && apk upgrade \
     && rm -rf /root \
     && mkdir /root \
     && apk del --purge build-dependencies \
-    && rm -rf /var/cache/apk/*
 
 # steam
-RUN apk update && apk upgrade \
-    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+RUN apk add --no-cache --update --virtual build-dependencies \
+    autoconf \
+    automake \
+    build-base \
     git \
     libtool \
     && cd /root \
@@ -305,11 +294,10 @@ RUN apk update && apk upgrade \
     && rm -rf /root \
     && mkdir /root \
     && apk del --purge build-dependencies \
-    && rm -rf /var/cache/apk/*
 
 # telegram
-RUN apk update && apk upgrade \
-    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+RUN apk add --no-cache --update --virtual build-dependencies \
+    build-base \
     git \
     pidgin-dev \
     && cd /root \
@@ -324,11 +312,10 @@ RUN apk update && apk upgrade \
     && rm -rf /root \
     && mkdir /root \
     && apk del --purge build-dependencies \
-    && rm -rf /var/cache/apk/*
 
 # wechat
-RUN apk update && apk upgrade \
-    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+RUN apk add --no-cache --update --virtual build-dependencies \
+    build-base \
     cargo \
     clang \
     git \
@@ -344,11 +331,10 @@ RUN apk update && apk upgrade \
     && rm -rf /root \
     && mkdir /root \
     && apk del --purge build-dependencies \
-    && rm -rf /var/cache/apk/*
 
 # vkontakt
-RUN apk update && apk upgrade \
-    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+RUN apk add --no-cache --update --virtual build-dependencies \
+    build-base \
     cmake \
     libtool \
     libxml2-dev \
@@ -366,11 +352,10 @@ RUN apk update && apk upgrade \
     && rm -rf /root \
     && mkdir /root \
     && apk del --purge build-dependencies \
-    && rm -rf /var/cache/apk/*
 
 # whatsapp
-RUN apk update && apk upgrade \
-    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+RUN apk add --no-cache --update --virtual build-dependencies \
+    build-base \
     git \
     pidgin-dev \
     protobuf-dev \
@@ -384,12 +369,12 @@ RUN apk update && apk upgrade \
     && rm -rf /root \
     && mkdir /root \
     && apk del --purge build-dependencies \
-    && rm -rf /var/cache/apk/*
 
 # yahoo
-RUN apk update && apk upgrade \
-    && apk add --virtual build-dependencies ${BUILD_DEPS} \
+RUN apk add --no-cache --update --virtual build-dependencies \
+    build-base \
     git \
+    json-glib-dev \
     pidgin-dev \
     && cd /root \
     && git clone -n https://github.com/EionRobb/funyahoo-plusplus \
@@ -401,8 +386,9 @@ RUN apk update && apk upgrade \
     && rm -rf /root \
     && mkdir /root \
     && apk del --purge build-dependencies \
-    && rm -rf /var/cache/apk/*
 
 USER bitlbee
 VOLUME /bitlbee-data
+EXPOSE 6697
+
 ENTRYPOINT ["/usr/local/sbin/bitlbee", "-F", "-n", "-d", "/bitlbee-data"]
