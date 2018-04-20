@@ -91,7 +91,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     && strip /usr/local/lib/bitlbee/discord.so \
     && rm -rf /root \
     && mkdir /root \
-    && apk del --purge build-dependencies \
+    && apk del --purge build-dependencies
 
 # facebook
 RUN apk add --no-cache --virtual build-dependencies \
@@ -111,7 +111,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     && strip /usr/local/lib/bitlbee/facebook.so \
     && rm -rf /root \
     && mkdir /root \
-    && apk del --purge build-dependencies \
+    && apk del --purge build-dependencies
 
 # hangouts
 RUN apk add --no-cache --virtual build-dependencies \
@@ -129,7 +129,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     && strip /usr/lib/purple-2/libhangouts.so \
     && rm -rf /root \
     && mkdir /root \
-    && apk del --purge build-dependencies \
+    && apk del --purge build-dependencies
 
 # naver line
 RUN apk add --no-cache --virtual build-dependencies \
@@ -150,7 +150,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     && strip /usr/lib/purple-2/libline.so \
     && rm -rf /root \
     && mkdir /root \
-    && apk del --purge build-dependencies \
+    && apk del --purge build-dependencies
 
 # mastodon
 RUN apk add --no-cache --virtual build-dependencies \
@@ -170,7 +170,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     && strip /usr/local/lib/bitlbee/mastodon.so \
     && rm -rf /root \
     && mkdir /root \
-    && apk del --purge build-dependencies \
+    && apk del --purge build-dependencies
 
 # matrix
 RUN apk add --no-cache --virtual build-dependencies \
@@ -188,7 +188,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     && strip /usr/lib/purple-2/libmatrix.so \
     && rm -rf /root \
     && mkdir /root \
-    && apk del --purge build-dependencies \
+    && apk del --purge build-dependencies
 
 # mattermost
 RUN apk add --no-cache --virtual build-dependencies \
@@ -206,7 +206,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     && strip /usr/lib/purple-2/libmattermost.so \
     && rm -rf /root \
     && mkdir /root \
-    && apk del --purge build-dependencies \
+    && apk del --purge build-dependencies
 
 # pushbullet
 RUN apk add --no-cache --virtual build-dependencies \
@@ -223,7 +223,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     && strip /usr/lib/purple-2/libpushbullet.so \
     && rm -rf /root \
     && mkdir /root \
-    && apk del --purge build-dependencies \
+    && apk del --purge build-dependencies
 
 # skype
 RUN apk add --no-cache --virtual build-dependencies \
@@ -241,7 +241,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     && strip /usr/lib/purple-2/libskypeweb.so \
     && rm -rf /root \
     && mkdir /root \
-    && apk del --purge build-dependencies \
+    && apk del --purge build-dependencies
 
 # rocket.chat
 RUN apk add --no-cache --virtual build-dependencies \
@@ -259,7 +259,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     && strip /usr/lib/purple-2/librocketchat.so \
     && rm -rf /root \
     && mkdir /root \
-    && apk del --purge build-dependencies \
+    && apk del --purge build-dependencies
 
 # slack
 RUN apk add --no-cache --virtual build-dependencies \
@@ -274,7 +274,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     && make install \
     && rm -rf /root \
     && mkdir /root \
-    && apk del --purge build-dependencies \
+    && apk del --purge build-dependencies
 
 # steam
 RUN apk add --no-cache --virtual build-dependencies \
@@ -293,7 +293,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     && strip /usr/local/lib/bitlbee/steam.so \
     && rm -rf /root \
     && mkdir /root \
-    && apk del --purge build-dependencies \
+    && apk del --purge build-dependencies
 
 # telegram
 RUN apk add --no-cache --virtual build-dependencies \
@@ -311,7 +311,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     && strip /usr/lib/purple-2/telegram-purple.so \
     && rm -rf /root \
     && mkdir /root \
-    && apk del --purge build-dependencies \
+    && apk del --purge build-dependencies
 
 # wechat
 RUN apk add --no-cache --virtual build-dependencies \
@@ -330,7 +330,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     && strip /usr/lib/purple-2/libwechat.so \
     && rm -rf /root \
     && mkdir /root \
-    && apk del --purge build-dependencies \
+    && apk del --purge build-dependencies
 
 # vkontakt
 RUN apk add --no-cache --virtual build-dependencies \
@@ -351,7 +351,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     && strip /usr/lib/purple-2/libpurple-vk-plugin.so \
     && rm -rf /root \
     && mkdir /root \
-    && apk del --purge build-dependencies \
+    && apk del --purge build-dependencies
 
 # whatsapp
 RUN apk add --no-cache --virtual build-dependencies \
@@ -368,7 +368,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     && strip /usr/lib/purple-2/libwhatsapp.so \
     && rm -rf /root \
     && mkdir /root \
-    && apk del --purge build-dependencies \
+    && apk del --purge build-dependencies
 
 # yahoo
 RUN apk add --no-cache --virtual build-dependencies \
@@ -385,7 +385,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     && strip /usr/lib/purple-2/libyahoo-plusplus.so \
     && rm -rf /root \
     && mkdir /root \
-    && apk del --purge build-dependencies \
+    && apk del --purge build-dependencies
 
 USER bitlbee
 VOLUME /bitlbee-data
