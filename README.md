@@ -1,7 +1,7 @@
 ## BitlBee, fully loaded.
-![Docker Pulls](https://img.shields.io/docker/pulls/bclemens/bitlbee.svg) ![Docker Stars](https://img.shields.io/docker/stars/bclemens/bitlbee.svg) ![Size](https://images.microbadger.com/badges/image/bclemens/bitlbee.svg) ![Version](https://images.microbadger.com/badges/version/bclemens/bitlbee.svg)
+![Docker Pulls](https://img.shields.io/docker/pulls/bclemens/bitlbee.svg) ![Docker Stars](https://img.shields.io/docker/stars/bclemens/bitlbee.svg) [![Size](https://images.microbadger.com/badges/image/bclemens/bitlbee.svg)](https://microbadger.com/images/bclemens/bitlbee) [![](https://images.microbadger.com/badges/commit/bclemens/bitlbee.svg)](https://microbadger.com/images/bclemens/bitlbee)
 
-Batteries-included build of BitlBee with OTR and support for:
+BitlBee, with LDAP, OTR, Purple, and support for:
 * AIM
 * Bonjour
 * [Discord](https://github.com/sm00th/bitlbee-discord)
@@ -22,6 +22,7 @@ Batteries-included build of BitlBee with OTR and support for:
 * [Slack](https://github.com/dylex/slack-libpurple)
 * [Steam](https://github.com/bitlbee/bitlbee-steam)
 * [Telegram](https://github.com/majn/telegram-purple)
+* Twitter
 * [Вконтакте](https://bitbucket.org/olegoandreev/purple-vk-plugin)
 * [Wechat](https://github.com/sbwtw/pidgin-wechat)
 * [WhatsApp](https://github.com/jakibaki/whatsapp-purple)
@@ -45,5 +46,3 @@ bclemens/bitlbee
 ```
 docker-compose up -d
 ```
-
-

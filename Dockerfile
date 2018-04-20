@@ -43,7 +43,7 @@ ENV BITLBEE_COMMIT=246b98b \
         protobuf-c-dev" \
     RUNTIME_DEPS=" \
         glib-dev \
-        gnutls-dev \
+        gnutls \
         json-glib \
         libgcrypt-dev \
         libotr \
@@ -53,14 +53,15 @@ ENV BITLBEE_COMMIT=246b98b \
         libpurple-xmpp \
         libwebp-dev \
         openldap \
-        pidgin-dev \
         protobuf-c"
 
 # bitlbee
 RUN apk update && apk upgrade \
     && apk add --virtual build-dependencies ${BUILD_DEPS} \
     git \
+    gnutls-dev \
     libotr-dev \
+    pidgin-dev \
     openldap-dev \
     && apk add --virtual runtime-dependencies ${RUNTIME_DEPS} \
     && cd /root \
@@ -68,7 +69,7 @@ RUN apk update && apk upgrade \
     && cd bitlbee \
     && git checkout ${BITLBEE_COMMIT} \
     && mkdir /bitlbee-data \
-    && ./configure --build=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl --otr=plugin --purple=1 --ldap=0 --config=/bitlbee-data \
+    && ./configure --build=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl --otr=plugin --purple=1 --ldap=1 --config=/bitlbee-data \
     && make \
     && make install \
     && make install-dev \
@@ -124,6 +125,7 @@ RUN apk update && apk upgrade \
 RUN apk update && apk upgrade \
     && apk add --virtual build-dependencies ${BUILD_DEPS} \
     mercurial \
+    pidgin-dev \
     && cd /root \
     && hg clone -U https://bitbucket.org/EionRobb/purple-hangouts \
     && cd purple-hangouts \
@@ -151,6 +153,7 @@ RUN apk update && apk upgrade \
     libotr-dev \
     libtool \
     openssl-dev \
+    pidgin-dev \
     protobuf-c-dev \
     && cd /root \
     && git clone -n https://gitlab.com/bclemens/purple-line \
@@ -188,6 +191,7 @@ RUN apk update && apk upgrade \
     && apk add --virtual build-dependencies ${BUILD_DEPS} \
     http-parser-dev \
     git \
+    pidgin-dev \
     && cd /root \
     && git clone -n https://github.com/matrix-org/purple-matrix \
     && cd purple-matrix \
@@ -204,6 +208,7 @@ RUN apk update && apk upgrade \
 RUN apk update && apk upgrade \
     && apk add --virtual build-dependencies ${BUILD_DEPS} \
     git \
+    pidgin-dev \
     && cd /root \
     && git clone -n https://github.com/EionRobb/purple-mattermost \
     && cd purple-mattermost \
@@ -220,6 +225,7 @@ RUN apk update && apk upgrade \
 RUN apk update && apk upgrade \
     && apk add --virtual build-dependencies ${BUILD_DEPS} \
     git \
+    pidgin-dev \
     && cd /root \
     && git clone -n https://github.com/EionRobb/pidgin-pushbullet \
     && cd pidgin-pushbullet \
@@ -236,6 +242,7 @@ RUN apk update && apk upgrade \
 RUN apk update && apk upgrade \
     && apk add --virtual build-dependencies ${BUILD_DEPS} \
     git \
+    pidgin-dev \
     && cd /root \
     && git clone -n https://github.com/EionRobb/skype4pidgin \
     && cd skype4pidgin \
@@ -253,6 +260,7 @@ RUN apk update && apk upgrade \
 RUN apk update && apk upgrade \
     && apk add --virtual build-dependencies ${BUILD_DEPS} \
     mercurial \
+    pidgin-dev \
     && cd /root \
     && hg clone -U https://bitbucket.org/EionRobb/purple-rocketchat \
     && cd purple-rocketchat \
@@ -269,6 +277,7 @@ RUN apk update && apk upgrade \
 RUN apk update && apk upgrade \
     && apk add --virtual build-dependencies ${BUILD_DEPS} \
     git \
+    pidgin-dev \
     && cd /root \
     && git clone -n https://github.com/dylex/slack-libpurple \
     && cd slack-libpurple \
@@ -302,6 +311,7 @@ RUN apk update && apk upgrade \
 RUN apk update && apk upgrade \
     && apk add --virtual build-dependencies ${BUILD_DEPS} \
     git \
+    pidgin-dev \
     && cd /root \
     && git clone -n https://github.com/majn/telegram-purple \
     && cd telegram-purple \
@@ -323,6 +333,7 @@ RUN apk update && apk upgrade \
     clang \
     git \
     openssl-dev \
+    pidgin-dev \
     && cd /root \
     && git clone -n https://github.com/sbwtw/pidgin-wechat \
     && cd pidgin-wechat \
@@ -342,6 +353,7 @@ RUN apk update && apk upgrade \
     libtool \
     libxml2-dev \
     mercurial \
+    pidgin-dev \
     && cd /root \
     && hg clone -U https://bitbucket.org/olegoandreev/purple-vk-plugin \
     && cd purple-vk-plugin \
@@ -360,6 +372,7 @@ RUN apk update && apk upgrade \
 RUN apk update && apk upgrade \
     && apk add --virtual build-dependencies ${BUILD_DEPS} \
     git \
+    pidgin-dev \
     protobuf-dev \
     && cd /root \
     && git clone -n https://github.com/jakibaki/whatsapp-purple \
@@ -377,6 +390,7 @@ RUN apk update && apk upgrade \
 RUN apk update && apk upgrade \
     && apk add --virtual build-dependencies ${BUILD_DEPS} \
     git \
+    pidgin-dev \
     && cd /root \
     && git clone -n https://github.com/EionRobb/funyahoo-plusplus \
     && cd funyahoo-plusplus \
