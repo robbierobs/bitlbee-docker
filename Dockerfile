@@ -16,15 +16,15 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 ENV BITLBEE_COMMIT=246b98b \
     DISCORD_COMMIT=4fc5649 \
     FACEBOOK_COMMIT=553593d \
-    HANGOUTS_COMMIT=0e137e6 \
+    HANGOUTS_COMMIT=9d008f2 \
     LINE_COMMIT=156f411 \
     MASTODON_COMMIT=0095ef0 \
     MATRIX_COMMIT=49ea988 \
     MATTERMOST_COMMIT=bc02343 \
     PUSHBULLET_COMMIT=d0898fd \
     ROCKETCHAT_COMMIT=fb8dcc6 \
-    SKYPE_COMMIT=c395028 \
-    SLACK_COMMIT=b0f1550 \
+    SKYPE_COMMIT=632e2bb \
+    SLACK_COMMIT=e9ad478 \
     STEAM_COMMIT=a6444d2 \
     TELEGRAM_COMMIT=94dd3be \
     VK_COMMIT=51a91c8 \
@@ -32,16 +32,16 @@ ENV BITLBEE_COMMIT=246b98b \
     WHATSAPP_COMMIT=81c7285 \
     YAHOO_COMMIT=fbbd9c5 \
     RUNTIME_DEPS=" \
-        glib-dev \
+        glib \
         gnutls \
         json-glib \
-        libgcrypt-dev \
+        libevent \
+        libgcrypt \
         libotr \
         libpurple \
         libpurple-bonjour \
         libpurple-oscar \
         libpurple-xmpp \
-        libwebp-dev \
         openldap \
         protobuf-c"
 
@@ -50,6 +50,7 @@ RUN apk add --update --no-cache --virtual build-dependencies \
     build-base \
     git \
     gnutls-dev \
+    libevent-dev \
     libotr-dev \
     pidgin-dev \
     openldap-dev \
@@ -59,7 +60,7 @@ RUN apk add --update --no-cache --virtual build-dependencies \
     && cd bitlbee \
     && git checkout ${BITLBEE_COMMIT} \
     && mkdir /bitlbee-data \
-    && ./configure --build=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl --otr=plugin --purple=1 --ldap=1 --config=/bitlbee-data \
+    && ./configure --buiild=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl --events=libevent --ldap=1 --otr=plugin --purple=1 --config=/bitlbee-data \
     && make \
     && make install \
     && make install-dev \
@@ -79,13 +80,14 @@ RUN apk add --no-cache --virtual build-dependencies \
     automake \
     build-base \
     git \
+    glib-dev \
     libtool \
     && cd /root \
     && git clone -n https://github.com/sm00th/bitlbee-discord \
     && cd bitlbee-discord \
     && git checkout ${DISCORD_COMMIT} \
     && ./autogen.sh \
-    && ./configure \
+    && ./configure --build=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl \
     && make \
     && make install \
     && strip /usr/local/lib/bitlbee/discord.so \
@@ -105,7 +107,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     && git clone -n https://github.com/jgeboski/bitlbee-facebook \
     && cd bitlbee-facebook \
     && git checkout ${FACEBOOK_COMMIT} \
-    && ./autogen.sh \
+    && ./autogen.sh --build=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl \
     && make \
     && make install \
     && strip /usr/local/lib/bitlbee/facebook.so \
@@ -138,6 +140,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     curl \
     flex \
     git \
+    libgcrypt-dev \
     libtool \
     openssl-dev \
     pidgin-dev \
@@ -158,13 +161,14 @@ RUN apk add --no-cache --virtual build-dependencies \
     automake \
     build-base \
     git \
+    glib-dev \
     libtool \
     && cd /root \
     && git clone -n https://github.com/kensanata/bitlbee-mastodon \
     && cd bitlbee-mastodon \
     && git checkout ${MASTODON_COMMIT} \
     && ./autogen.sh \
-    && ./configure \
+    && ./configure --build=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl \
     && make \
     && make install \
     && strip /usr/local/lib/bitlbee/mastodon.so \
@@ -225,24 +229,6 @@ RUN apk add --no-cache --virtual build-dependencies \
     && mkdir /root \
     && apk del --purge build-dependencies
 
-# skype
-RUN apk add --no-cache --virtual build-dependencies \
-    build-base \
-    git \
-    json-glib-dev \
-    pidgin-dev \
-    && cd /root \
-    && git clone -n https://github.com/EionRobb/skype4pidgin \
-    && cd skype4pidgin \
-    && git checkout ${SKYPE_COMMIT} \
-    && cd skypeweb \
-    && make \
-    && make install \
-    && strip /usr/lib/purple-2/libskypeweb.so \
-    && rm -rf /root \
-    && mkdir /root \
-    && apk del --purge build-dependencies
-
 # rocket.chat
 RUN apk add --no-cache --virtual build-dependencies \
     build-base \
@@ -257,6 +243,24 @@ RUN apk add --no-cache --virtual build-dependencies \
     && make \
     && make install \
     && strip /usr/lib/purple-2/librocketchat.so \
+    && rm -rf /root \
+    && mkdir /root \
+    && apk del --purge build-dependencies
+
+# skype
+RUN apk add --no-cache --virtual build-dependencies \
+    build-base \
+    git \
+    json-glib-dev \
+    pidgin-dev \
+    && cd /root \
+    && git clone -n https://github.com/EionRobb/skype4pidgin \
+    && cd skype4pidgin \
+    && git checkout ${SKYPE_COMMIT} \
+    && cd skypeweb \
+    && make \
+    && make install \
+    && strip /usr/lib/purple-2/libskypeweb.so \
     && rm -rf /root \
     && mkdir /root \
     && apk del --purge build-dependencies
@@ -282,12 +286,14 @@ RUN apk add --no-cache --virtual build-dependencies \
     automake \
     build-base \
     git \
+    glib-dev \
+    libgcrypt-dev \
     libtool \
     && cd /root \
     && git clone -n https://github.com/bitlbee/bitlbee-steam \
     && cd bitlbee-steam \
     && git checkout ${STEAM_COMMIT} \
-    && ./autogen.sh \
+    && ./autogen.sh --build=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl \
     && make \
     && make install \
     && strip /usr/local/lib/bitlbee/steam.so \
@@ -299,13 +305,14 @@ RUN apk add --no-cache --virtual build-dependencies \
 RUN apk add --no-cache --virtual build-dependencies \
     build-base \
     git \
+    libgcrypt-dev \
     pidgin-dev \
     && cd /root \
     && git clone -n https://github.com/majn/telegram-purple \
     && cd telegram-purple \
     && git checkout ${TELEGRAM_COMMIT} \
     && git submodule update --init --recursive \
-    && ./configure \
+    && ./configure --build=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl --disable-libwebp \
     && make \
     && make install \
     && strip /usr/lib/purple-2/telegram-purple.so \
@@ -387,8 +394,8 @@ RUN apk add --no-cache --virtual build-dependencies \
     && mkdir /root \
     && apk del --purge build-dependencies
 
-USER bitlbee
-VOLUME /bitlbee-data
 EXPOSE 6697
+VOLUME /bitlbee-data
 
+USER bitlbee
 ENTRYPOINT ["/usr/local/sbin/bitlbee", "-F", "-n", "-d", "/bitlbee-data"]
