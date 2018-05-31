@@ -13,25 +13,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vendor="Tiuxo" \
       org.label-schema.schema-version="1.0"
 
-ENV BITLBEE_COMMIT=49ab3cb \
-    DISCORD_COMMIT=54c06e6 \
-    FACEBOOK_COMMIT=553593d \
-    HANGOUTS_COMMIT=9d008f2 \
-    LINE_COMMIT=156f411 \
-    MASTODON_COMMIT=b5a21ed \
-    MATRIX_COMMIT=49ea988 \
-    MATTERMOST_COMMIT=bc02343 \
-    PUSHBULLET_COMMIT=d0898fd \
-    ROCKETCHAT_COMMIT=fb8dcc6 \
-    SKYPE_COMMIT=cf65095 \
-    SLACK_COMMIT=a803b73 \
-    STEAM_COMMIT=a6444d2 \
-    TELEGRAM_COMMIT=f38ea48 \
-    VK_COMMIT=51a91c8 \
-    WECHAT_COMMIT=17b15e5 \
-    WHATSAPP_COMMIT=81c7285 \
-    YAHOO_COMMIT=fbbd9c5 \
-    RUNTIME_DEPS=" \
+ENV  RUNTIME_DEPS=" \
         glib \
         gnutls \
         json-glib \
@@ -56,9 +38,8 @@ RUN apk add --update --no-cache --virtual build-dependencies \
     openldap-dev \
     && apk add --no-cache --virtual runtime-dependencies ${RUNTIME_DEPS} \
     && cd /root \
-    && git clone -n https://github.com/bitlbee/bitlbee \
+    && git clone https://github.com/bitlbee/bitlbee \
     && cd bitlbee \
-    && git checkout ${BITLBEE_COMMIT} \
     && mkdir /bitlbee-data \
     && ./configure --buiild=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl --events=libevent --ldap=1 --otr=plugin --purple=1 --config=/bitlbee-data \
     && make \
@@ -83,9 +64,8 @@ RUN apk add --no-cache --virtual build-dependencies \
     glib-dev \
     libtool \
     && cd /root \
-    && git clone -n https://github.com/sm00th/bitlbee-discord \
+    && git clone https://github.com/sm00th/bitlbee-discord \
     && cd bitlbee-discord \
-    && git checkout ${DISCORD_COMMIT} \
     && ./autogen.sh \
     && ./configure --build=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl \
     && make \
@@ -104,9 +84,8 @@ RUN apk add --no-cache --virtual build-dependencies \
     json-glib-dev \
     libtool \
     && cd /root \
-    && git clone -n https://github.com/jgeboski/bitlbee-facebook \
+    && git clone https://github.com/jgeboski/bitlbee-facebook \
     && cd bitlbee-facebook \
-    && git checkout ${FACEBOOK_COMMIT} \
     && ./autogen.sh --build=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl \
     && make \
     && make install \
@@ -123,9 +102,8 @@ RUN apk add --no-cache --virtual build-dependencies \
     pidgin-dev \
     protobuf-c-dev \
     && cd /root \
-    && hg clone -U https://bitbucket.org/EionRobb/purple-hangouts \
+    && hg clone https://bitbucket.org/EionRobb/purple-hangouts \
     && cd purple-hangouts \
-    && hg update ${HANGOUTS_COMMIT} \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libhangouts.so \
@@ -145,9 +123,8 @@ RUN apk add --no-cache --virtual build-dependencies \
     openssl-dev \
     pidgin-dev \
     && cd /root \
-    && git clone -n https://gitlab.com/bclemens/purple-line \
+    && git clone https://gitlab.com/bclemens/purple-line \
     && cd purple-line \
-    && git checkout ${LINE_COMMIT} \
     && make THRIFT_STATIC=true \
     && make install \
     && strip /usr/lib/purple-2/libline.so \
@@ -164,9 +141,8 @@ RUN apk add --no-cache --virtual build-dependencies \
     glib-dev \
     libtool \
     && cd /root \
-    && git clone -n https://github.com/kensanata/bitlbee-mastodon \
+    && git clone https://github.com/kensanata/bitlbee-mastodon \
     && cd bitlbee-mastodon \
-    && git checkout ${MASTODON_COMMIT} \
     && ./autogen.sh \
     && ./configure --build=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl \
     && make \
@@ -184,9 +160,8 @@ RUN apk add --no-cache --virtual build-dependencies \
     git \
     pidgin-dev \
     && cd /root \
-    && git clone -n https://github.com/matrix-org/purple-matrix \
+    && git clone https://github.com/matrix-org/purple-matrix \
     && cd purple-matrix \
-    && git checkout ${MATRIX_COMMIT} \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libmatrix.so \
@@ -202,9 +177,8 @@ RUN apk add --no-cache --virtual build-dependencies \
     json-glib-dev \
     pidgin-dev \
     && cd /root \
-    && git clone -n https://github.com/EionRobb/purple-mattermost \
+    && git clone https://github.com/EionRobb/purple-mattermost \
     && cd purple-mattermost \
-    && git checkout ${MATTERMOST_COMMIT} \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libmattermost.so \
@@ -219,9 +193,8 @@ RUN apk add --no-cache --virtual build-dependencies \
     json-glib-dev \
     pidgin-dev \
     && cd /root \
-    && git clone -n https://github.com/EionRobb/pidgin-pushbullet \
+    && git clone https://github.com/EionRobb/pidgin-pushbullet \
     && cd pidgin-pushbullet \
-    && git checkout ${PUSHBULLET_COMMIT} \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libpushbullet.so \
@@ -237,9 +210,8 @@ RUN apk add --no-cache --virtual build-dependencies \
     mercurial \
     pidgin-dev \
     && cd /root \
-    && hg clone -U https://bitbucket.org/EionRobb/purple-rocketchat \
+    && hg clone https://bitbucket.org/EionRobb/purple-rocketchat \
     && cd purple-rocketchat \
-    && hg update ${ROCKETCHAT_COMMIT} \
     && make \
     && make install \
     && strip /usr/lib/purple-2/librocketchat.so \
@@ -254,9 +226,8 @@ RUN apk add --no-cache --virtual build-dependencies \
     json-glib-dev \
     pidgin-dev \
     && cd /root \
-    && git clone -n https://github.com/EionRobb/skype4pidgin \
+    && git clone https://github.com/EionRobb/skype4pidgin \
     && cd skype4pidgin \
-    && git checkout ${SKYPE_COMMIT} \
     && cd skypeweb \
     && make \
     && make install \
@@ -271,9 +242,8 @@ RUN apk add --no-cache --virtual build-dependencies \
     git \
     pidgin-dev \
     && cd /root \
-    && git clone -n https://github.com/dylex/slack-libpurple \
+    && git clone https://github.com/dylex/slack-libpurple \
     && cd slack-libpurple \
-    && git checkout ${SLACK_COMMIT} \
     && make \
     && make install \
     && rm -rf /root \
@@ -290,9 +260,8 @@ RUN apk add --no-cache --virtual build-dependencies \
     libgcrypt-dev \
     libtool \
     && cd /root \
-    && git clone -n https://github.com/bitlbee/bitlbee-steam \
+    && git clone https://github.com/bitlbee/bitlbee-steam \
     && cd bitlbee-steam \
-    && git checkout ${STEAM_COMMIT} \
     && ./autogen.sh --build=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl \
     && make \
     && make install \
@@ -308,9 +277,8 @@ RUN apk add --no-cache --virtual build-dependencies \
     libgcrypt-dev \
     pidgin-dev \
     && cd /root \
-    && git clone -n https://github.com/majn/telegram-purple \
+    && git clone https://github.com/majn/telegram-purple \
     && cd telegram-purple \
-    && git checkout ${TELEGRAM_COMMIT} \
     && git submodule update --init --recursive \
     && ./configure --build=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl --disable-libwebp \
     && make \
@@ -329,9 +297,8 @@ RUN apk add --no-cache --virtual build-dependencies \
     openssl-dev \
     pidgin-dev \
     && cd /root \
-    && git clone -n https://github.com/sbwtw/pidgin-wechat \
+    && git clone https://github.com/sbwtw/pidgin-wechat \
     && cd pidgin-wechat \
-    && git checkout ${WECHAT_COMMIT} \
     && cargo build --release \
     && cp target/release/libwechat.so /usr/lib/purple-2/ \
     && strip /usr/lib/purple-2/libwechat.so \
@@ -348,9 +315,8 @@ RUN apk add --no-cache --virtual build-dependencies \
     mercurial \
     pidgin-dev \
     && cd /root \
-    && hg clone -U https://bitbucket.org/olegoandreev/purple-vk-plugin \
+    && hg clone https://bitbucket.org/olegoandreev/purple-vk-plugin \
     && cd purple-vk-plugin \
-    && hg update ${VK_COMMIT} \
     && cd build \
     && cmake .. \
     && make \
@@ -367,9 +333,8 @@ RUN apk add --no-cache --virtual build-dependencies \
     pidgin-dev \
     protobuf-dev \
     && cd /root \
-    && git clone -n https://github.com/jakibaki/whatsapp-purple \
+    && git clone https://github.com/jakibaki/whatsapp-purple \
     && cd whatsapp-purple \
-    && git checkout ${WHATSAPP_COMMIT} \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libwhatsapp.so \
@@ -384,9 +349,8 @@ RUN apk add --no-cache --virtual build-dependencies \
     json-glib-dev \
     pidgin-dev \
     && cd /root \
-    && git clone -n https://github.com/EionRobb/funyahoo-plusplus \
+    && git clone https://github.com/EionRobb/funyahoo-plusplus \
     && cd funyahoo-plusplus \
-    && git checkout ${YAHOO_COMMIT} \
     && make \
     && make install \
     && strip /usr/lib/purple-2/libyahoo-plusplus.so \
