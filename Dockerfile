@@ -14,17 +14,17 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0"
 
 ENV BITLBEE_COMMIT=49ab3cb \
-    DISCORD_COMMIT=ae2177a \
+    DISCORD_COMMIT=fb58d48 \
     FACEBOOK_COMMIT=553593d \
-    HANGOUTS_COMMIT=9d008f2 \
+    HANGOUTS_COMMIT=cad4296 \
     LINE_COMMIT=156f411 \
-    MASTODON_COMMIT=b5a21ed \
+    MASTODON_COMMIT=0f2f52b \
     MATRIX_COMMIT=49ea988 \
     MATTERMOST_COMMIT=bc02343 \
     PUSHBULLET_COMMIT=d0898fd \
-    ROCKETCHAT_COMMIT=fb8dcc6 \
-    SKYPE_COMMIT=cf65095 \
-    SLACK_COMMIT=a803b73 \
+    ROCKETCHAT_COMMIT=1949d60 \
+    SKYPE_COMMIT=c70141c \
+    SLACK_COMMIT=bf292c \
     STEAM_COMMIT=a6444d2 \
     TELEGRAM_COMMIT=f38ea48 \
     VK_COMMIT=51a91c8 \
@@ -60,7 +60,7 @@ RUN apk add --update --no-cache --virtual build-dependencies \
     cd bitlbee; \
     git checkout ${BITLBEE_COMMIT}; \
     mkdir /bitlbee-data; \
-    ./configure --buiild=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl --events=libevent --ldap=1 --otr=plugin --purple=1 --config=/bitlbee-data; \
+    ./configure --build=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl --debug=0 --events=libevent --ldap=1 --otr=plugin --purple=1 --config=/bitlbee-data; \
     make; \
     make install; \
     make install-dev; \
