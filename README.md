@@ -29,12 +29,14 @@ BitlBee, with LDAP, OTR, Purple, and support for:
 * [Yahoo](https://github.com/EionRobb/funyahoo-plusplus)
 * Zephyr
 
+Naver LINE is commented out in the Dockerfile because Naver now bans accounts using 3rd-party clients.  Uncomment it at your own risk.
+
 ## Typical Usage
 
 For configuration persistance, `/opt/dockerdata/bitlbee` should be present on the host with sufficient permissions.
 
 ##### Using Docker CLI
-```
+```bash
 docker run -d --name bitlbee --restart=always \
 -v /opt/dockerdata/bitlbee:/bitlbee-data:rw \
 -v /etc/localtime:/etc/localtime:ro \
@@ -42,7 +44,17 @@ docker run -d --name bitlbee --restart=always \
 bclemens/bitlbee
 ```
 
-##### Using Docker Compose
+Using a custom bitlbee.conf:
+```bash
+docker run -d --name bitlbee --restart=always \
+-v /opt/dockerdata/bitlbee:/bitlbee-data:rw \
+-v /opt/dockerdata/bitlbee.conf:/bitlbee.conf:ro \
+-v /etc/localtime:/etc/localtime:ro \
+-p 6667:6667 \
+bclemens/bitlbee
 ```
+
+##### Using Docker Compose
+```bash
 docker-compose up -d
 ```

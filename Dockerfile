@@ -11,24 +11,24 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.vcs-url="https://github.com/brianclemens/bitlbee-docker" \
       org.label-schema.vendor="Tiuxo" \
-      org.label-schema.schema-version="1.0"
+      org.label-schema.schema-version="1.1"
 
-ENV BITLBEE_COMMIT=e979b0f \
+ENV BITLBEE_COMMIT=fe122f3 \
     DISCORD_COMMIT=aa0bbf2 \
     FACEBOOK_COMMIT=c76b36b \
-    HANGOUTS_COMMIT=effc9b4 \
+    HANGOUTS_COMMIT=3f7d89b \
     LINE_COMMIT=156f411 \
     MASTODON_COMMIT=aa9f931 \
-    MATRIX_COMMIT=33802dc \
-    MATTERMOST_COMMIT=9125c33 \
+    MATRIX_COMMIT=4494ba2 \
+    MATTERMOST_COMMIT=19db180 \
     PUSHBULLET_COMMIT=8a7837c \
-    ROCKETCHAT_COMMIT=cb171c8 \
-    SKYPE_COMMIT=14f1b69 \
-    SLACK_COMMIT=c10cc72 \
+    ROCKETCHAT_COMMIT=826990b \
+    SKYPE_COMMIT=2f5a3e2 \
+    SLACK_COMMIT=8acc4eb \
     STEAM_COMMIT=a6444d2 \
-    TELEGRAM_COMMIT=3477e8d \
+    TELEGRAM_COMMIT=b101bbb \
     VK_COMMIT=51a91c8 \
-    WECHAT_COMMIT=17b15e5 \
+    WECHAT_COMMIT=eecd9c6 \
     WHATSAPP_COMMIT=81c7285 \
     YAHOO_COMMIT=fbbd9c5 \
     RUNTIME_DEPS=" \
@@ -59,6 +59,7 @@ RUN apk add --update --no-cache --virtual build-dependencies \
     git clone -n https://github.com/bitlbee/bitlbee; \
     cd bitlbee; \
     git checkout ${BITLBEE_COMMIT}; \
+    cp bitlbee.conf /bitlbee.conf; \
     mkdir /bitlbee-data; \
     ./configure --build=x86_64-alpine-linux-musl --host=x86_64-alpine-linux-musl --debug=0 --events=libevent --ldap=1 --otr=plugin --purple=1 --config=/bitlbee-data; \
     make; \
@@ -134,26 +135,27 @@ RUN apk add --no-cache --virtual build-dependencies \
     apk del --purge build-dependencies
 
 # naver line
-RUN apk add --no-cache --virtual build-dependencies \
-    boost-dev \
-    build-base \
-    curl \
-    flex \
-    git \
-    libgcrypt-dev \
-    libtool \
-    openssl-dev \
-    pidgin-dev; \
-    cd /root; \
-    git clone -n https://gitlab.com/bclemens/purple-line; \
-    cd purple-line; \
-    git checkout ${LINE_COMMIT}; \
-    make THRIFT_STATIC=true; \
-    make install; \
-    strip /usr/lib/purple-2/libline.so; \
-    rm -rf /root; \
-    mkdir /root; \
-    apk del --purge build-dependencies
+# naver insta-bans 3rd-party clients now
+# RUN apk add --no-cache --virtual build-dependencies \
+#     boost-dev \
+#     build-base \
+#     curl \
+#     flex \
+#     git \
+#     libgcrypt-dev \
+#     libtool \
+#     openssl-dev \
+#     pidgin-dev; \
+#     cd /root; \
+#     git clone -n https://gitlab.com/bclemens/purple-line; \
+#     cd purple-line; \
+#     git checkout ${LINE_COMMIT}; \
+#     make THRIFT_STATIC=true; \
+#     make install; \
+#     strip /usr/lib/purple-2/libline.so; \
+#     rm -rf /root; \
+#     mkdir /root; \
+#     apk del --purge build-dependencies
 
 # mastodon
 RUN apk add --no-cache --virtual build-dependencies \
@@ -182,6 +184,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     http-parser-dev \
     json-glib-dev \
     git \
+    sqlite-dev \
     pidgin-dev; \
     cd /root; \
     git clone -n https://github.com/matrix-org/purple-matrix; \
@@ -394,8 +397,8 @@ RUN apk add --no-cache --virtual build-dependencies \
     mkdir /root; \
     apk del --purge build-dependencies
 
-EXPOSE 6697
+EXPOSE 6667
 VOLUME /bitlbee-data
 
 USER bitlbee
-ENTRYPOINT ["/usr/local/sbin/bitlbee", "-F", "-n", "-d", "/bitlbee-data"]
+ENTRYPOINT ["/usr/local/sbin/bitlbee", "-F", "-n", "-d", "/bitlbee-data", "-c", "/bitlbee.conf"]
