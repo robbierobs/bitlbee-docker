@@ -45,6 +45,7 @@ ENV BITLBEE_COMMIT=fe122f3 \
         openldap \
         protobuf-c"
 
+
 # bitlbee
 RUN apk add --update --no-cache --virtual build-dependencies \
     build-base \
@@ -55,6 +56,7 @@ RUN apk add --update --no-cache --virtual build-dependencies \
     pidgin-dev \
     openldap-dev; \
     apk add --no-cache --virtual runtime-dependencies ${RUNTIME_DEPS}; \
+    apk add --no-cache su-exec; \
     cd /root; \
     git clone -n https://github.com/bitlbee/bitlbee; \
     cd bitlbee; \
@@ -66,11 +68,6 @@ RUN apk add --update --no-cache --virtual build-dependencies \
     make install; \
     make install-dev; \
     make install-etc; \
-    adduser -u 1000 -S bitlbee; \
-    addgroup -g 1000 -S bitlbee; \
-    chown -R bitlbee:bitlbee /bitlbee-data; \
-    touch /var/run/bitlbee.pid; \
-    chown bitlbee:bitlbee /var/run/bitlbee.pid; \
     rm -rf /root; \
     mkdir /root; \
     apk del --purge build-dependencies
@@ -400,5 +397,8 @@ RUN apk add --no-cache --virtual build-dependencies \
 EXPOSE 6667
 VOLUME /bitlbee-data
 
-USER bitlbee
-ENTRYPOINT ["/usr/local/sbin/bitlbee", "-F", "-n", "-d", "/bitlbee-data", "-c", "/bitlbee.conf"]
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
+CMD ["/usr/local/sbin/bitlbee", "-F", "-n", "-d", "/bitlbee-data", "-c", "/bitlbee.conf"]
