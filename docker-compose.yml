@@ -1,9 +1,10 @@
 bitlbee:
-  image: 'bclemens/bitlbee:latest'
+  # image: 'bclemens/bitlbee:latest'
+  image: 'irobbierobinson/bitlbee-docker:latest'
   restart: always
 
   ports:
     - '6667:6667'
-  volumes:
-    - '/opt/dockerdata/bitlbee:/bitlbee-data'
-    - '/etc/localtime:/etc/localtime:ro'
+  # volumes:
+  #   - '/opt/dockerdata/bitlbee:/bitlbee-data'
+  #   - '/etc/localtime:/etc/localtime:ro'

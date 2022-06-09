@@ -17,7 +17,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vendor="Tiuxo" \
       org.label-schema.schema-version="1.1"
 
-ENV BITLBEE_COMMIT=fe122f3 \
+ENV BITLBEE_COMMIT=cc0ad0a \
     DISCORD_COMMIT=607f988 \
     FACEBOOK_COMMIT=a31ccbe \
     HANGOUTS_COMMIT=3f7d89b \
@@ -48,6 +48,10 @@ ENV BITLBEE_COMMIT=fe122f3 \
         libpurple-xmpp \
         openldap \
         protobuf-c"
+
+RUN apk update
+
+RUN apk upgrade
 
 
 # bitlbee
@@ -397,6 +401,11 @@ RUN apk add --no-cache --virtual build-dependencies \
     rm -rf /root; \
     mkdir /root; \
     apk del --purge build-dependencies
+
+RUN apk update
+RUN apk upgrade
+RUN apk update
+RUN apk add glib json-glib libevent gnutls libgcrypt pidgin-dev openldap-dev
 
 EXPOSE 6667
 VOLUME /bitlbee-data
