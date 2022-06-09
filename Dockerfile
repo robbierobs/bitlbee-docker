@@ -4,6 +4,10 @@ ARG BUILD_DATE
 ARG MAKEFLAGS=-j12
 ARG VCS_REF
 
+# Updates 06/09/2022
+# Facebook
+# Discord
+
 LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.name="BitlBee" \
       org.label-schema.description="BitlBee, fully loaded." \
@@ -14,8 +18,8 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.1"
 
 ENV BITLBEE_COMMIT=fe122f3 \
-    DISCORD_COMMIT=aa0bbf2 \
-    FACEBOOK_COMMIT=c76b36b \
+    DISCORD_COMMIT=607f988 \
+    FACEBOOK_COMMIT=a31ccbe \
     HANGOUTS_COMMIT=3f7d89b \
     LINE_COMMIT=156f411 \
     MASTODON_COMMIT=aa9f931 \
